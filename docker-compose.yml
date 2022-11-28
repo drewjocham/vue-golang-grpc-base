@@ -1,0 +1,19 @@
+version: '3.0'
+services:
+    api:
+        build:
+            context: ./api/docker
+        ports:
+            - "8082:8082"
+            - "8080:8080"
+    form:
+        build:
+            context: ./form/docker
+        ports:
+            - "9000:9000"
+    envoy:
+        build:
+            context: envoy
+        ports:
+        - "8080:8080"
+        - "9901:9901"

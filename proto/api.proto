@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option go_package = "pkg/api";
+
+import "google/api/annotations.proto";
+
+service ApiService {
+    rpc GenerateQuestions(GenerateQuestionsRequest) returns (GenerateQuestionsResponse) {}
+    rpc SubmitMultipleChoiceQuestion(MultipleChoiceQuestionRequest) returns (MultipleChoiceQuestionResponse) {}
+    rpc SubmitCode(CodeRequest) returns (CodeResponse){}
+    rpc Test(TestRequest) returns (TestResponse){
+        option (google.api.http) = {
+            get: "/v1/test"
+        };
+    }
+}
+
+message TestRequest {
+    string name = 1;
+}
+
+message TestResponse {
+    string name = 1;
+    string age = 2;
+}
+
+message MultipleChoiceQuestionRequest {
+    string id = 1;
+    string questionId = 2;
+    string answer = 3;
+}
+
+message MultipleChoiceQuestionResponse {
+    string id = 1;
+    string isCorrect = 2;
+}
+
+message CodeRequest {
+    string id = 1;
+    string codeQuestionId = 2;
+}
+
+message CodeResponse {
+    string id = 1;
+}
+
+message GenerateQuestionsRequest {
+    string question = 1;
+}
+
+message GenerateQuestionsResponse {
+    string id = 1;
+}
