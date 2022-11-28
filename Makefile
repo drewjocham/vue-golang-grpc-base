@@ -33,5 +33,3 @@ proto: ## Generate protobuf code
         ${PROJ_PATH}/proto/*.proto
 
 
-
-

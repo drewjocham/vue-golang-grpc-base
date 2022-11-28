@@ -1,4 +1,4 @@
-FROM golang:1.12.16-stretch
+FROM golang:1.19.3-alpine
 RUN apt-get update && apt-get install -y libudev-dev
 
 ARG GOPATH

@@ -6,14 +6,8 @@ services:
         ports:
             - "8082:8082"
             - "8080:8080"
-    form:
+    client:
         build:
-            context: ./form/docker
+            context: ./client
         ports:
             - "9000:9000"
-    envoy:
-        build:
-            context: envoy
-        ports:
-        - "8080:8080"
-        - "9901:9901"
