@@ -10,7 +10,7 @@ RUN rm -rf /usr/share/nginx/html/*
 RUN rm -rf /etc/nginx/*
 
 ## Copy the template and mime types
-COPY .docker/nginx.conf.template /etc/nginx/nginx.conf.template
+COPY .docker/nginx.conf.template /etc/nginx/nginx.conf
 COPY .docker/mime.types /etc/nginx/mime.types
 
 ## Log to stdout / stderr
