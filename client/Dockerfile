@@ -1,5 +1,6 @@
 FROM nginx:1.21.3-alpine
 
+# Configure these later in a pipeline, maybe circle CI?
 ARG COMMIT_ID
 ARG SOURCE_BRANCH
 ENV COMMIT_ID=$COMMIT_ID
