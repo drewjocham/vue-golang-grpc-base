@@ -3,7 +3,7 @@ package rest
 import (
 	"context"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/interviews/pkg/api"
+	"github.com/interviews/protobuf/api"
 	"github.com/rs/cors"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -49,6 +49,7 @@ func RunHttpServer(server *http.Server, httpEndpoint, grpcEndpoint, swaggerPath 
 	}
 
 	// Register the gRPC endpoints
+
 	if err = api.RegisterApiServiceHandlerFromEndpoint(ctx, mux, grpcEndpoint, opts); err != nil {
 		return
 	}
