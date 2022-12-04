@@ -17,18 +17,17 @@ jobs:
         - run: cd api && ls -all
         - run: cd api && go get -v -t -d ./...
         - run: cd api && go build -o main .
-        - run: echo $DOCKER_PASS
-        - run: docker login -u $DOCKER_USER -p $DOCKER_PASS https://index.docker.io/v1/
+        - run: echo ${DOCKER_PASS}
         -   deploy:
                 docker:
                 - image: docker:18.09-git
                   auth:
-                      username: $DOCKER_USER
-                      password: $DOCKER_PASS
+                      username: ${DOCKER_USER}
+                      password: ${DOCKER_PASS}
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
-                      cd api && docker build -t drewjocham/demo/client/api:v1 .
-                      docker push drewjocham/demo/client/api:v1
+                      cd api && docker build -t drewjocham/demo/api:v1 .
+                      docker push drewjocham/demo/api:v1
                     fi
   client:
     working_directory: ~/client
@@ -48,7 +47,7 @@ jobs:
        #           - yarn-packages-{{ checksum "yarn.lock" }}
         - run:
               name: Install Dependencies
-              command: cd client && ls -all && yarn install --immutable
+              command: cd client yarn install --immutable
         #- save_cache:
         #      name: Save Yarn Package Cache
         #      key: cd client && yarn-packages-{{ checksum "yarn.lock" }}
@@ -56,13 +55,12 @@ jobs:
         #          - .yarn/cache
         #          - .yarn/unplugged
         - run: cd client && yarn build
-        - run: docker login -u $DOCKER_USER -p $DOCKER_PASS https://index.docker.io/v1/
         -   deploy:
                 docker:
                 - image: docker:18.09-git
                   auth:
-                      username: $DOCKER_USER
-                      password: $DOCKER_PASS
+                      username: ${DOCKER_USER}
+                      password: ${DOCKER_PASS}
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
                       cd client && docker build -t drewjocham/demo/client:v1 .
