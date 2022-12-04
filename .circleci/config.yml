@@ -14,6 +14,8 @@ jobs:
               path: ~/api
         -   setup_remote_docker: # (2)
                 docker_layer_caching: true # (3)
+        -   setup_remote_docker:
+                version: 20.10.14
         - run: cd api && ls -all
         - run: cd api && go get -v -t -d ./...
         - run: cd api && go build -o main .
@@ -26,7 +28,6 @@ jobs:
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
                       cd api && docker build -t drewjocham/api:v1 .
-                      docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push drewjocham/api:v1
                     fi
   client:
@@ -66,7 +67,6 @@ jobs:
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
                       cd client && docker build -t drewjocham/client:v1 .
-                      docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push drewjocham/client:v1
                     fi
 
