@@ -2,7 +2,7 @@ package questions
 
 import (
 	"context"
-	"github.com/interviews/protobuf/api"
+	"github.com/interviews/proto/api"
 )
 
 type apiServiceServer struct {

@@ -1,6 +1,26 @@
 PROJ_PATH=${CURDIR}
 PROTO_DEST=./src/proto
 
+.PHONY: build-client
+build-client: ## build client for production
+	cd client && yarn build
+
+.PHONY: build-api
+build-api: ## build api for production
+	cd api && go build
+
+.PHONY: docker-build
+build: ## start docker compose
+	docker-compose build
+
+.PHONY: docker-up
+up: ## start docker compose
+	docker-compose up -d
+
+.PHONY: docker-down
+down: ## start docker compose
+	docker-compose down
+
 .PHONY: mod-vendor
 mod-vendor: ## Download, verify and vendor dependencies
 	cd api && go mod tidy && go mod download && go mod verify && go mod vendor
@@ -13,7 +33,7 @@ mod-vendor: ## Download, verify and vendor dependencies
 .PHONY: proto
 proto: ## Generate protobuf code
 # Compile proto files inside the project.
-	protoc api.proto --proto_path=${PROJ_PATH}/api/protobuf/proto --go_out=. --go-grpc_out=. \
+	protoc api.proto --proto_path=${PROJ_PATH}/proto --go_out=. --go-grpc_out=. \
 		   --grpc-gateway_out . \
 		   --grpc-gateway_opt generate_unbound_methods=true \
 		   --plugin=protoc-gen-grpc-gateway=${GOPATH}/bin/protoc-gen-grpc-gateway \
@@ -27,7 +47,7 @@ proto: ## Generate protobuf code
         --ts_out=grpc_js:${PROTO_DEST} \
         --js_out=import_style=commonjs:${PROTO_DEST} \
         --grpc_out=grpc_js:${PROTO_DEST} \
-        -I ${PROJ_PATH}/api/protobuf/proto \
-        ${PROJ_PATH}/api/protobuf/proto/*.proto
+        -I ${PROJ_PATH}/proto \
+        ${PROJ_PATH}/proto/*.proto
 
 

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "api/proto/api";
+
+import "google/api/annotations.proto";
+
+service ApiService {
+    rpc Test(TestRequest) returns (TestResponse) {
+        option (google.api.http) = {
+            get: "/v1/test"
+        };
+    }
+}
+
+message TestRequest {
+    string name = 1;
+}
+
+message TestResponse {
+    string name = 1;
+    string age = 2;
+}

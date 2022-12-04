@@ -6,7 +6,7 @@ import (
 	"github.com/interviews/internal/config"
 	"github.com/interviews/internal/questions"
 	"github.com/interviews/internal/rest"
-	"github.com/interviews/protobuf/api"
+	"github.com/interviews/proto/api"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

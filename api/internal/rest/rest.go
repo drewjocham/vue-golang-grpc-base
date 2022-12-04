@@ -3,7 +3,7 @@ package rest
 import (
 	"context"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/interviews/protobuf/api"
+	"github.com/interviews/proto/api"
 	"github.com/rs/cors"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
