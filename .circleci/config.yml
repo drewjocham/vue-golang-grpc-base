@@ -5,6 +5,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
+  working_directory: ~/api
   api:
     docker:
       - image: golang:1.19.3-alpine3.16
@@ -17,9 +18,9 @@ jobs:
         -   run: pwd
         -   run: ls -all
         -   run: make mod-vendor
-        -   run: cd api && go get -v -t -d ./...
-        -   run: cd api && go test -v ./...
-        -   run: cd api && go build -o main .
+        -   run: go get -v -t -d ./...
+        -   run: go test -v ./...
+        -   run: go build -o main .
         -   deploy:
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-setup" ]; then
@@ -32,8 +33,8 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: nginx:1.21.3-alpine
-      - image: cimg/node:19.1.0
+      - image: cimg/node:latest
+      #- image: nginx:1.21.3-alpine
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
