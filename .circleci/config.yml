@@ -21,7 +21,7 @@ jobs:
         -   run: cd api && go build -o main .
         -   deploy:
                 docker:
-                    -   image: docker:18.09-git
+                - image: docker:18.09-git
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
                       cd api && docker build -t drewjocham/demo/client/api:v1 .
@@ -56,7 +56,7 @@ jobs:
         - run: cd client && ls -all
         -   deploy:
                 docker:
-                    -   image: docker:18.09-git
+                - image: docker:18.09-git
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
                       cd client && docker build -t drewjocham/demo/client:v1 .
@@ -69,6 +69,11 @@ jobs:
 workflows:
     hobby-project-setup:
         jobs:
-            - api
-            - client
+          - client
+          - api
+        #build:
+          #machine:
+          #image: ubuntu-2004:202008-01
+
+
 
