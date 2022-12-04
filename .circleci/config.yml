@@ -14,7 +14,9 @@ jobs:
                 docker_layer_caching: true # (3)
 
         # specify any bash command here prefixed with `run: `
-        #-   run: make mod-vendor
+        -   run: pwd
+        -   run: ls -all
+        -   run: make mod-vendor
         -   run: cd api && go get -v -t -d ./...
         -   run: cd api && go test -v ./...
         -   run: cd api && go build -o main .
@@ -26,6 +28,7 @@ jobs:
                       docker push ${DOCKER_REPO}
                     fi
   client:
+    working_directory: ~/client
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -41,7 +44,7 @@ jobs:
                   - yarn-packages-{{ checksum "yarn.lock" }}
         - run:
               name: Install Dependencies
-              command: cd client && yarn install --immutable
+              command: yarn install --immutable
         - save_cache:
               name: Save Yarn Package Cache
               key: yarn-packages-{{ checksum "yarn.lock" }}
@@ -50,7 +53,7 @@ jobs:
                   - .yarn/unplugged
         -   run:
                 name: Installing the package.json dependencies
-                command: cd client && yarn
+                command: yarn
 
         # run build!
         -   run: make build-client
