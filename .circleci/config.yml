@@ -14,17 +14,20 @@ jobs:
               path: ~/api
         -   setup_remote_docker: # (2)
                 docker_layer_caching: true # (3)
-        -   run: cd api && ls -all
-        -   run: cd api && go get -v -t -d ./...
-        -   run: cd api && go build -o main .
+        - run: cd api && ls -all
+        - run: cd api && go get -v -t -d ./...
+        - run: cd api && go build -o main .
         - run: echo $DOCKER_PASS
+        - run: docker login -u $DOCKER_USER -p $DOCKER_PASS https://index.docker.io/v1/
         -   deploy:
                 docker:
                 - image: docker:18.09-git
+                  auth:
+                      username: $DOCKER_USER
+                      password: $DOCKER_PASS
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
                       cd api && docker build -t drewjocham/demo/client/api:v1 .
-                      docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push drewjocham/demo/client/api:v1
                     fi
   client:
@@ -53,13 +56,16 @@ jobs:
         #          - .yarn/cache
         #          - .yarn/unplugged
         - run: cd client && yarn build
+        - run: docker login -u $DOCKER_USER -p $DOCKER_PASS https://index.docker.io/v1/
         -   deploy:
                 docker:
                 - image: docker:18.09-git
+                  auth:
+                      username: $DOCKER_USER
+                      password: $DOCKER_PASS
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
                       cd client && docker build -t drewjocham/demo/client:v1 .
-                      docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push drewjocham/demo/client:v1
                     fi
 
