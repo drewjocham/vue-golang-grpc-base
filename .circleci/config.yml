@@ -70,13 +70,12 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-    hobby-project-setup:
+    build:
         jobs:
-        - client: docker
-        - api: docker
-        #build:
-          #machine:
-          #image: ubuntu-2004:202008-01
+          - client:
+                context: docker
+          - api:
+              context: docker
 
 
 
