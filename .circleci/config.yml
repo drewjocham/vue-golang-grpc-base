@@ -22,7 +22,7 @@ jobs:
         -   run: cd api && go build -o main .
         -   deploy:
                 command: |
-                    if [ "${CIRCLE_BRANCH}" == "circle-ci-setup" ]; then
+                    if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
                       docker build -t ${DOCKER_REPO}/api .
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push ${DOCKER_REPO}/api
@@ -42,8 +42,6 @@ jobs:
          #     name: Restore Yarn Package Cache
          #     keys:
          #         - yarn-packages-{{ checksum "yarn.lock" }}
-        - run: pwd
-        - run: ls -all
         - run:
               name: Install Dependencies
               command: cd client && ls -all && yarn install --immutable
@@ -57,12 +55,10 @@ jobs:
                 name: Installing the package.json dependencies
                 command: yarn
         - run: cd client && ls -all && yarn build
-        -   persist_to_workspace:
-                root: .
-                paths: dist
+        - run: cd client && ls -all
         -   deploy:
                 command: |
-                    if [ "${CIRCLE_BRANCH}" == "circle-ci-setup" ]; then
+                    if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
                       docker build -t ${DOCKER_REPO}/client .
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push ${DOCKER_REPO}/client
