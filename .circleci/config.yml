@@ -9,20 +9,20 @@ jobs:
     docker:
       - image: cimg/go:1.19
     steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - run:
-                name: Install Dependencies
-                command: go get ./...
-            - save_cache:
-                key: go-mod-v4-{{ checksum "go.sum" }}
-                paths:
-                    - "/go/pkg/mod"
-            - run:
-                name: Run tests
-                command: go test -v
+        - checkout
+        -   setup_remote_docker: # (2)
+                docker_layer_caching: true # (3)
 
+        # specify any bash command here prefixed with `run: `
+        -   run: go get -v -t -d ./...
+        -   run: go test -v ./...
+        -   deploy:
+                command: |
+                    if [ "${CIRCLE_BRANCH}" == "master" ]; then
+                      docker build -t ${DOCKER_REPO} .
+                      docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
+                      docker push ${DOCKER_REPO}
+                    fi
   say-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
