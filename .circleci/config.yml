@@ -18,9 +18,9 @@ jobs:
         -   run: pwd
         -   run: ls -all
         #-   run: make mod-vendor
-        -   run: go get -v -t -d ./...
-        -   run: go test -v ./...
-        -   run: go build -o main .
+        -   run: cd api && go get -v -t -d ./...
+        -   run: cd api && go test -v ./...
+        -   run: cd api && go build -o main .
         -   deploy:
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-setup" ]; then
@@ -33,7 +33,7 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: cimg/node:19.1.0
+      - image: cimg/node:16.1.0
       #- image: nginx:1.21.3-alpine
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
