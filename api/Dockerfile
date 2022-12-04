@@ -3,6 +3,12 @@
 # Start from the latest golang base image
 FROM golang:1.19.3-alpine3.16
 
+# Configure these later in a pipeline
+ARG COMMIT_ID
+ARG SOURCE_BRANCH
+ENV COMMIT_ID=$COMMIT_ID
+ENV SOURCE_BRANCH=$SOURCE_BRANCH
+
 # Add Maintainer Info
 LABEL maintainer="Drew Jocham <contact@jocham.io>"
 
