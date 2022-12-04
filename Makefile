@@ -1,6 +1,10 @@
 PROJ_PATH=${CURDIR}
 PROTO_DEST=./src/proto
 
+.PHONY: build-client
+build-client: ## build client for production
+	cd client && yarn build
+
 .PHONY: mod-vendor
 mod-vendor: ## Download, verify and vendor dependencies
 	cd api && go mod tidy && go mod download && go mod verify && go mod vendor

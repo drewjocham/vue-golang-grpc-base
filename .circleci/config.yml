@@ -7,42 +7,47 @@ version: 2.1
 jobs:
   api:
     docker:
-      - image: cimg/go:1.19
+      - image: golang:1.19.3-alpine3.16
     steps:
         - checkout
         -   setup_remote_docker: # (2)
                 docker_layer_caching: true # (3)
 
         # specify any bash command here prefixed with `run: `
-        -   run: ls -all
-        -   run: pwd
         -   run: make mod-vendor
         -   run: cd api && go get -v -t -d ./...
         -   run: cd api && go test -v ./...
+        -   run: cd api && go build -o main .
         -   deploy:
                 command: |
-                    if [ "${CIRCLE_BRANCH}" == "master" ]; then
+                    if [ "${CIRCLE_BRANCH}" == "circle-ci-setup" ]; then
                       docker build -t ${DOCKER_REPO} .
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push ${DOCKER_REPO}
                     fi
-  say-hello:
+  view:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: cimg/base:stable
+      - image: nginx:1.21.3-alpine
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+        - checkout
+        -   run:
+                name: Installing the package.json dependencies
+                command: cd client && yarn
+
+        # run build!
+        -   run: make build-client
+        -   persist_to_workspace:
+                root: .
+                paths: dist
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
+      - client
       - api
