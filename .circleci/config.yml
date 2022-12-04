@@ -12,16 +12,16 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            -   run:
-                  name: Install Dependencies
-                  command: go get ./...
-            -   save_cache:
-                  key: go-mod-v4-{{ checksum "go.sum" }}
-                  paths:
+            - run:
+                name: Install Dependencies
+                command: go get ./...
+            - save_cache:
+                key: go-mod-v4-{{ checksum "go.sum" }}
+                paths:
                     - "/go/pkg/mod"
-            -   run:
-                  name: Run tests
-                  command: go test -v
+            - run:
+                name: Run tests
+                command: go test -v
 
   say-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
