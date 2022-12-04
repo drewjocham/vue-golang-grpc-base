@@ -22,7 +22,7 @@ jobs:
         -   deploy:
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
-                      docker build -t drewjocham/demo/client/api:v1 .
+                      cd api && docker build -t drewjocham/demo/client/api:v1 .
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push drewjocham/demo/client/api:v1
                     fi
@@ -55,7 +55,7 @@ jobs:
         -   deploy:
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
-                      docker build -t drewjocham/demo/client:v1 .
+                      cd client && docker build -t drewjocham/demo/client:v1 .
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push drewjocham/demo/client:v1
                     fi
