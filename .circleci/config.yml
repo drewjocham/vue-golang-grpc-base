@@ -14,8 +14,6 @@ jobs:
               path: ~/api
         -   setup_remote_docker: # (2)
                 docker_layer_caching: true # (3)
-
-        # specify any bash command here prefixed with `run: `
         -   run: pwd
         -   run: ls -all
         -   run: go get -v -t -d ./...
@@ -34,7 +32,6 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
       - image: cimg/node:16.1.0
-      #- image: nginx:1.21.3-alpine
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
@@ -44,11 +41,11 @@ jobs:
          #     name: Restore Yarn Package Cache
          #     keys:
          #         - yarn-packages-{{ checksum "yarn.lock" }}
-        -   run: pwd
-        -   run: ls -all
+        - run: pwd
+        - run: ls -all
         - run:
               name: Install Dependencies
-              command: yarn install --immutable
+              command: cd client && ls -all && yarn install --immutable
         - save_cache:
               name: Save Yarn Package Cache
               key: yarn-packages-{{ checksum "yarn.lock" }}
@@ -58,9 +55,6 @@ jobs:
         - run:
                 name: Installing the package.json dependencies
                 command: yarn
-
-        # run build!
-        #-   run: make build-client
         - run: yarn build
         -   persist_to_workspace:
                 root: .
