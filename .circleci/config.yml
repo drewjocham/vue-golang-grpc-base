@@ -22,10 +22,10 @@ jobs:
         -   run: cd api && go build -o main .
         -   deploy:
                 command: |
-                    if [ "${CIRCLE_BRANCH}" == "circle-ci-setup" ]; then
-                      docker build -t ${DOCKER_REPO}/api .
+                    if [ "${CIRCLE_BRANCH}" == "main" ]; then
+                      docker build -t ${DOCKER_REPO}/api:v1 .
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
-                      docker push ${DOCKER_REPO}/api
+                      docker push ${DOCKER_REPO}/api:v1
                     fi
   client:
     working_directory: ~/client
@@ -62,10 +62,10 @@ jobs:
                 paths: dist
         -   deploy:
                 command: |
-                    if [ "${CIRCLE_BRANCH}" == "circle-ci-setup" ]; then
-                      docker build -t ${DOCKER_REPO}/client .
+                    if [ "${CIRCLE_BRANCH}" == "main" ]; then
+                      docker build -t ${DOCKER_REPO}/client:v1 .
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
-                      docker push ${DOCKER_REPO}/client
+                      docker push ${DOCKER_REPO}/client:v1
                     fi
 
 # Invoke jobs via workflows
