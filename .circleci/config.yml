@@ -22,6 +22,7 @@ jobs:
                       cd api && docker build -t drewjocham/api:${CIRCLE_SHA1} .
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push drewjocham/api:${CIRCLE_SHA1}
+                      docker push drewjocham/api:latest
                     fi
   client:
     working_directory: ~/client
@@ -48,6 +49,7 @@ jobs:
                       cd client && docker build -t drewjocham/client:${CIRCLE_SHA1} .
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push drewjocham/client:${CIRCLE_SHA1}
+                      docker push drewjocham/client:latest
                     fi
 
 # Invoke jobs via workflows
