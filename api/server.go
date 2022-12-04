@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/interviews/api/internal/config"
-	"github.com/interviews/api/internal/questions"
-	"github.com/interviews/api/internal/rest"
-	"github.com/interviews/pkg/api"
+	"github.com/interviews/internal/config"
+	"github.com/interviews/internal/questions"
+	"github.com/interviews/internal/rest"
+	"github.com/interviews/protobuf/api"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -41,6 +41,7 @@ func startServer() error {
 	server := grpc.NewServer(grpc.ChainUnaryInterceptor())
 
 	apiServer := questions.NewApiServiceServer()
+
 	api.RegisterApiServiceServer(server, apiServer)
 
 	// GRPC server

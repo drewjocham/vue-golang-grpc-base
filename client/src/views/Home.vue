@@ -33,7 +33,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import HelloWorld from '@/components/HelloWorld.vue';
-import {api} from "@/lib/api"; // @ is an alias to /src
+import {api} from "@/lib/api";
+
 
 @Options({
   components: {
@@ -58,6 +59,10 @@ export default class Home extends Vue {
 
     counter(): void {
         this.age = this.age * this.age
+    }
+
+    emitMethod () {
+        //this.emitter.emit('some-event', 'payload')
     }
 }
 </script>

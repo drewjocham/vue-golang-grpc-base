@@ -3,9 +3,7 @@ PROTO_DEST=./src/proto
 
 .PHONY: mod-vendor
 mod-vendor: ## Download, verify and vendor dependencies
-	go mod download
-	go mod verify
-	go mod vendor
+	cd api && go mod tidy && go mod download && go mod verify && go mod vendor
 
 # go install \
     github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest \
@@ -15,7 +13,7 @@ mod-vendor: ## Download, verify and vendor dependencies
 .PHONY: proto
 proto: ## Generate protobuf code
 # Compile proto files inside the project.
-	protoc api.proto --proto_path=${PROJ_PATH}/proto --go_out=. --go-grpc_out=. \
+	protoc api.proto --proto_path=${PROJ_PATH}/api/protobuf/proto --go_out=. --go-grpc_out=. \
 		   --grpc-gateway_out . \
 		   --grpc-gateway_opt generate_unbound_methods=true \
 		   --plugin=protoc-gen-grpc-gateway=${GOPATH}/bin/protoc-gen-grpc-gateway \
@@ -29,9 +27,7 @@ proto: ## Generate protobuf code
         --ts_out=grpc_js:${PROTO_DEST} \
         --js_out=import_style=commonjs:${PROTO_DEST} \
         --grpc_out=grpc_js:${PROTO_DEST} \
-        -I ${PROJ_PATH}/proto \
-        ${PROJ_PATH}/proto/*.proto
-
-
+        -I ${PROJ_PATH}/api/protobuf/proto \
+        ${PROJ_PATH}/api/protobuf/proto/*.proto
 
 
