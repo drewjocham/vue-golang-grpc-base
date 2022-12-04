@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+      {{ message}}
   </div>
 </template>
 
@@ -13,7 +14,14 @@ import { Options, Vue } from 'vue-class-component';
   }
 })
 export default class HelloWorld extends Vue {
-  msg!: string
+    msg!: string
+    message = "hi"
+
+
+    onExpand() {
+      // eventBus.$emit('test-event', this.message)
+    }
+
 }
 </script>
 

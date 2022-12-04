@@ -3,7 +3,7 @@ PROTO_DEST=./src/proto
 
 .PHONY: mod-vendor
 mod-vendor: ## Download, verify and vendor dependencies
-	cd api && go mod tidy && go mod download && go mod verify #&& go mod vendor
+	cd api && go mod tidy && go mod download && go mod verify && go mod vendor
 
 # go install \
     github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest \

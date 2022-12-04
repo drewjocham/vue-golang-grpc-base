@@ -12,7 +12,7 @@ export const api = {
 
     async getTest() {
         try{
-            return await grpcClient.get<TestResponse>("http://localhost:8080/v1/test")
+            return await grpcClient.get<TestResponse>("http://localhost:8081/v1/test")
                 .then(res => {
                     return res.data
                 })

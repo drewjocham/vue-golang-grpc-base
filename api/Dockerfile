@@ -1,24 +1,23 @@
-# specify the base image to  be used for the application, alpine or ubuntu
-FROM golang:1.19-alpine
+# Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
-# create a working directory inside the image
+# Start from the latest golang base image
+FROM golang:latest
+
+# Add Maintainer Info
+LABEL maintainer="Drew Jocham <contact@jocham.io>"
+
+# Set the Current Working Directory inside the container
 WORKDIR /app
 
-# copy Go modules and dependencies to image
-COPY go.mod ./
+# Copy everything from the current directory to the Working Directory inside the container
+COPY . .
 
-# download Go modules and dependencies
-RUN go mod download
+# Build the Go app
+RUN go build -o main .
 
-# copy directory files i.e all files ending with .go
-COPY *.go ./
-
-# compile application
-RUN go build -o /godocker
-
-# tells Docker that the container listens on specified network ports at runtime
-EXPOSE 8080
+# Expose port 8080 to the outside world
+EXPOSE 8081
 EXPOSE 8082
 
-# command to be used to execute when the image is used to start a container
-CMD [ "/godocker" ]
+# Command to run the executable
+CMD ["./main"]
