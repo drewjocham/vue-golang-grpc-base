@@ -1,5 +1,4 @@
 import axios, {AxiosInstance} from "axios";
-// @ts-ignore
 import {TestResponse} from "@/proto/api_pb";
 
 
