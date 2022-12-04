@@ -6,7 +6,7 @@ version: 2.1
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   api:
-    #working_directory: ~/api
+    working_directory: ~/api
     docker:
       - image: golang:1.19.3-alpine3.16
     steps:

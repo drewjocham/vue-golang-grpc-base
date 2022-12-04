@@ -15,5 +15,6 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       '@typescript-eslint/no-var-requires': 0,
+      "@typescript-eslint/ban-ts-ignore": "off",
   }
 }
