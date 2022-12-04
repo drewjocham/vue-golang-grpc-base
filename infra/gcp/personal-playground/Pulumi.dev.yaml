@@ -1,0 +1,5 @@
+config:
+  gcp:project: "personal-311605"
+  gcp:region: us-central1
+  personal-playground:nodesPerZone: "1"
+  pulumi:template: kubernetes-gcp-python
