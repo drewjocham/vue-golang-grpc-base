@@ -1,9 +1,6 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   api:
     working_directory: ~/api
@@ -53,7 +50,11 @@ jobs:
                       docker tag drewjocham/client:${CIRCLE_SHA1} drewjocham/client:latest
                       docker push drewjocham/client:latest
                     fi
-
+    deployment:
+        - run:
+            name: Deploy Over SSH
+            command: |
+              ssh root@$34.23.236.49 "docker-composer up -d"
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:

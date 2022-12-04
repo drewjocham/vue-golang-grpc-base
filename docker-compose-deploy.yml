@@ -1,0 +1,15 @@
+version: '3.0'
+services:
+    api:
+        image: drewjocham/api:latest
+        ports:
+            - "8082:8082" # gRPC
+            - "8081:8081" # gRPC Gateway
+    client:
+        image: drewjocham/client:latest
+        environment:
+            - API_HOST=${API_HOST:-localhost}
+        env_file:
+            - client/client.env
+        ports:
+            - "8080:8080"

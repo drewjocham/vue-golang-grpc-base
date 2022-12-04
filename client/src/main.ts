@@ -4,7 +4,6 @@ import router from './router'
 import './assets/tailwind.css'
 import mitt from "mitt";
 
-
 const emitter = mitt()
 const app = createApp(App)
 
