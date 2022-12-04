@@ -54,10 +54,11 @@ jobs:
                       docker push drewjocham/client:latest
                     fi
   deployment:
-    - run:
-        name: Deploy Over SSH
-        command: |
-          ssh root@$34.23.236.49 "docker-composer up -d"
+    - steps:
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh root@$34.23.236.49 "docker-composer up -d"
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
