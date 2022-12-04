@@ -18,7 +18,6 @@ jobs:
         -   run: ls -all
         -   run: cd api && ls -all
         -   run: cd api && go get -v -t -d ./...
-        -   run: cd api && go test -v ./...
         -   run: cd api && go build -o main .
         -   deploy:
                 command: |
