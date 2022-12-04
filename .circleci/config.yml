@@ -45,15 +45,11 @@ jobs:
        #       name: Restore Yarn Package Cache
        #       keys:
        #           - yarn-packages-{{ checksum "yarn.lock" }}
+        -   setup_remote_docker:
+                version: 20.10.14
         - run:
               name: Install Dependencies
               command: cd client && yarn install --immutable
-        - run:
-              name: Docker status
-              command: sudo service --status-all
-        -   run:
-                name: Start Docker
-                command: sudo service docker start
         #- save_cache:
         #      name: Save Yarn Package Cache
         #      key: cd client && yarn-packages-{{ checksum "yarn.lock" }}
@@ -83,6 +79,11 @@ workflows:
               context: docker # env context name
           - api:
               context: docker
+              docker:
+                  -   image: cimg/base:2022.06
+                      auth:
+                          username: $DOCKER_USER
+                          password: DOCKER_PASS
         #build:
           #machine:
           #image: ubuntu-2004:202008-01
