@@ -12,7 +12,7 @@ jobs:
     steps:
         - checkout
         -   setup_remote_docker: # (2)
-                docker_layer_caching: true # (3)
+        -   docker_layer_caching: true # (3)
 
         # specify any bash command here prefixed with `run: `
         -   run: pwd
@@ -77,5 +77,6 @@ jobs:
 workflows:
   hobby-project-setup:
     jobs:
-      - client
       - api
+      - client
+
