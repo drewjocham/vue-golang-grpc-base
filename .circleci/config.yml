@@ -27,6 +27,7 @@ jobs:
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
                       cd api && docker build -t drewjocham/demo/api:v1 .
+                      docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push drewjocham/demo/api:v1
                     fi
   client:
@@ -47,7 +48,7 @@ jobs:
        #           - yarn-packages-{{ checksum "yarn.lock" }}
         - run:
               name: Install Dependencies
-              command: cd client yarn install --immutable
+              command: cd client && yarn install --immutable
         #- save_cache:
         #      name: Save Yarn Package Cache
         #      key: cd client && yarn-packages-{{ checksum "yarn.lock" }}
@@ -64,6 +65,7 @@ jobs:
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-adjustment" ]; then
                       cd client && docker build -t drewjocham/demo/client:v1 .
+                      docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push drewjocham/demo/client:v1
                     fi
 
@@ -73,7 +75,7 @@ workflows:
     hobby-project-setup:
         jobs:
           - client:
-                context: docker
+              context: docker
           - api:
               context: docker
         #build:
