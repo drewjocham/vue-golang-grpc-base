@@ -14,8 +14,6 @@ jobs:
               path: ~/api
         -   setup_remote_docker: # (2)
                 docker_layer_caching: true # (3)
-        -   setup_remote_docker:
-                version: 20.10.14
         - run: cd api && ls -all
         - run: cd api && go get -v -t -d ./...
         - run: cd api && go build -o main .
@@ -47,6 +45,7 @@ jobs:
        #       keys:
        #           - yarn-packages-{{ checksum "yarn.lock" }}
         -   setup_remote_docker:
+                docker_layer_caching: true
                 version: 20.10.14
         - run:
               name: Install Dependencies
