@@ -16,9 +16,9 @@ jobs:
                 docker_layer_caching: true # (3)
         -   run: pwd
         -   run: ls -all
-        -   run: go get -v -t -d ./...
-        -   run: go test -v ./...
-        -   run: go build -o main .
+        -   run: cd api && go get -v -t -d ./...
+        -   run: cd api && go test -v ./...
+        -   run: cd api && go build -o main .
         -   deploy:
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "circle-ci-setup" ]; then
@@ -48,14 +48,14 @@ jobs:
               command: cd client && ls -all && yarn install --immutable
         - save_cache:
               name: Save Yarn Package Cache
-              key: yarn-packages-{{ checksum "yarn.lock" }}
+              key: cd client && yarn-packages-{{ checksum "yarn.lock" }}
               paths:
                   - .yarn/cache
                   - .yarn/unplugged
         - run:
                 name: Installing the package.json dependencies
                 command: yarn
-        - run: yarn build
+        - run: cd client && ls -all && yarn build
         -   persist_to_workspace:
                 root: .
                 paths: dist
