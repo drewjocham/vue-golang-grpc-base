@@ -22,9 +22,6 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ApiServiceClient interface {
-	GenerateQuestions(ctx context.Context, in *GenerateQuestionsRequest, opts ...grpc.CallOption) (*GenerateQuestionsResponse, error)
-	SubmitMultipleChoiceQuestion(ctx context.Context, in *MultipleChoiceQuestionRequest, opts ...grpc.CallOption) (*MultipleChoiceQuestionResponse, error)
-	SubmitCode(ctx context.Context, in *CodeRequest, opts ...grpc.CallOption) (*CodeResponse, error)
 	Test(ctx context.Context, in *TestRequest, opts ...grpc.CallOption) (*TestResponse, error)
 }
 
@@ -34,33 +31,6 @@ type apiServiceClient struct {
 
 func NewApiServiceClient(cc grpc.ClientConnInterface) ApiServiceClient {
 	return &apiServiceClient{cc}
-}
-
-func (c *apiServiceClient) GenerateQuestions(ctx context.Context, in *GenerateQuestionsRequest, opts ...grpc.CallOption) (*GenerateQuestionsResponse, error) {
-	out := new(GenerateQuestionsResponse)
-	err := c.cc.Invoke(ctx, "/ApiService/GenerateQuestions", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *apiServiceClient) SubmitMultipleChoiceQuestion(ctx context.Context, in *MultipleChoiceQuestionRequest, opts ...grpc.CallOption) (*MultipleChoiceQuestionResponse, error) {
-	out := new(MultipleChoiceQuestionResponse)
-	err := c.cc.Invoke(ctx, "/ApiService/SubmitMultipleChoiceQuestion", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *apiServiceClient) SubmitCode(ctx context.Context, in *CodeRequest, opts ...grpc.CallOption) (*CodeResponse, error) {
-	out := new(CodeResponse)
-	err := c.cc.Invoke(ctx, "/ApiService/SubmitCode", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *apiServiceClient) Test(ctx context.Context, in *TestRequest, opts ...grpc.CallOption) (*TestResponse, error) {
@@ -76,9 +46,6 @@ func (c *apiServiceClient) Test(ctx context.Context, in *TestRequest, opts ...gr
 // All implementations must embed UnimplementedApiServiceServer
 // for forward compatibility
 type ApiServiceServer interface {
-	GenerateQuestions(context.Context, *GenerateQuestionsRequest) (*GenerateQuestionsResponse, error)
-	SubmitMultipleChoiceQuestion(context.Context, *MultipleChoiceQuestionRequest) (*MultipleChoiceQuestionResponse, error)
-	SubmitCode(context.Context, *CodeRequest) (*CodeResponse, error)
 	Test(context.Context, *TestRequest) (*TestResponse, error)
 	mustEmbedUnimplementedApiServiceServer()
 }
@@ -87,15 +54,6 @@ type ApiServiceServer interface {
 type UnimplementedApiServiceServer struct {
 }
 
-func (UnimplementedApiServiceServer) GenerateQuestions(context.Context, *GenerateQuestionsRequest) (*GenerateQuestionsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenerateQuestions not implemented")
-}
-func (UnimplementedApiServiceServer) SubmitMultipleChoiceQuestion(context.Context, *MultipleChoiceQuestionRequest) (*MultipleChoiceQuestionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SubmitMultipleChoiceQuestion not implemented")
-}
-func (UnimplementedApiServiceServer) SubmitCode(context.Context, *CodeRequest) (*CodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SubmitCode not implemented")
-}
 func (UnimplementedApiServiceServer) Test(context.Context, *TestRequest) (*TestResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Test not implemented")
 }
@@ -110,60 +68,6 @@ type UnsafeApiServiceServer interface {
 
 func RegisterApiServiceServer(s grpc.ServiceRegistrar, srv ApiServiceServer) {
 	s.RegisterService(&ApiService_ServiceDesc, srv)
-}
-
-func _ApiService_GenerateQuestions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GenerateQuestionsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ApiServiceServer).GenerateQuestions(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/ApiService/GenerateQuestions",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApiServiceServer).GenerateQuestions(ctx, req.(*GenerateQuestionsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ApiService_SubmitMultipleChoiceQuestion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MultipleChoiceQuestionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ApiServiceServer).SubmitMultipleChoiceQuestion(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/ApiService/SubmitMultipleChoiceQuestion",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApiServiceServer).SubmitMultipleChoiceQuestion(ctx, req.(*MultipleChoiceQuestionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ApiService_SubmitCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ApiServiceServer).SubmitCode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/ApiService/SubmitCode",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApiServiceServer).SubmitCode(ctx, req.(*CodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _ApiService_Test_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -191,18 +95,6 @@ var ApiService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "ApiService",
 	HandlerType: (*ApiServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GenerateQuestions",
-			Handler:    _ApiService_GenerateQuestions_Handler,
-		},
-		{
-			MethodName: "SubmitMultipleChoiceQuestion",
-			Handler:    _ApiService_SubmitMultipleChoiceQuestion_Handler,
-		},
-		{
-			MethodName: "SubmitCode",
-			Handler:    _ApiService_SubmitCode_Handler,
-		},
 		{
 			MethodName: "Test",
 			Handler:    _ApiService_Test_Handler,

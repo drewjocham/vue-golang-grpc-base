@@ -10,14 +10,14 @@ jobs:
     docker:
       - image: golang:1.19.3-alpine3.16
     steps:
-        - checkout
+        - checkout:
+              path: ~/api
         -   setup_remote_docker: # (2)
                 docker_layer_caching: true # (3)
 
         # specify any bash command here prefixed with `run: `
         -   run: pwd
         -   run: ls -all
-        #-   run: make mod-vendor
         -   run: go get -v -t -d ./...
         -   run: go test -v ./...
         -   run: go build -o main .
@@ -38,7 +38,8 @@ jobs:
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
-        - checkout
+        - checkout:
+              path: ~/client
         #- restore_cache:
          #     name: Restore Yarn Package Cache
          #     keys:
