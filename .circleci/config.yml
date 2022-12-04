@@ -60,12 +60,3 @@ jobs:
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push ${DOCKER_REPO}/client
                     fi
-
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
-workflows:
-  hobby-project-setup:
-    jobs:
-      - api
-      - client
-
