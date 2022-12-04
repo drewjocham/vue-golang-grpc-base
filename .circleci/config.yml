@@ -75,10 +75,12 @@ workflows:
                         username: $DOCKER_USER
                         password: $DOCKER_PASS
                 steps:
-                    -  setup_remote_docker:
-                         version: 20.10.14
+                    - setup_remote_docker:
+                        version: 20.10.14
                     - client
                     - api
+
+
 
         #build:
           #machine:
