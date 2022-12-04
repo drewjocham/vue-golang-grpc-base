@@ -79,11 +79,6 @@ workflows:
               context: docker # env context name
           - api:
               context: docker
-              docker:
-                  -   image: cimg/base:2022.06
-                      auth:
-                          username: $DOCKER_USER
-                          password: DOCKER_PASS
         #build:
           #machine:
           #image: ubuntu-2004:202008-01
