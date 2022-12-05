@@ -10,6 +10,6 @@ services:
         build:
             context: ./client
         environment:
-            API_HOST: localhost
+            - API_HOST = localhost
         ports:
             - "8080:8080"

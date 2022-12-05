@@ -8,6 +8,6 @@ services:
     client:
         image: drewjocham/client:latest
         environment:
-            API_HOST: localhost
+            - API_HOST = localhost
         ports:
             - "8080:8080"
