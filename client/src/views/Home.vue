@@ -25,7 +25,7 @@
           Counter
       </button>
       {{name}}-{{age}}
-      {{ mode }}- {{ myName}}
+      env: {{ mode }}- My name: {{ myName}}
 
 
   </div>
