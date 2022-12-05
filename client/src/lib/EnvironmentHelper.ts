@@ -1,10 +1,10 @@
 export class EnvironmentHelper {
     public static get isDevelopment(): boolean {
-        return process.env.NODE_ENV === "development";
+        return process.env.ENV === "development";
     }
 
     public static get isProduction(): boolean {
-        return process.env.NODE_ENV === "production";
+        return process.env.ENV === "production";
     }
 
     public get baseUrl(): string {

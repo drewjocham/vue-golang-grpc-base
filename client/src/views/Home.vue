@@ -25,6 +25,7 @@
           Counter
       </button>
       {{name}}-{{age}}
+      {{ mode }}- {{ myName}}
 
 
   </div>
@@ -45,6 +46,8 @@ export default class Home extends Vue {
 
     name = ""
     age = 25
+    mode = process.env.NODE_ENV
+    myName = process.env.VUE_APP_TITLE
 
     submit(): void {
         api.getTest().then(
