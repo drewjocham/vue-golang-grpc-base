@@ -41,11 +41,11 @@ http {
     }
 
      upstream api {
-        server localhost:8081;
+        server ${API_HOST};
      }
 
     server {
-        server_name  ${API_HOST};
+        server_name localhost;
         listen 8080;
 
         root /usr/share/nginx/html;
