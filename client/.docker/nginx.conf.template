@@ -41,7 +41,7 @@ http {
     }
 
      upstream api {
-        server ${API_HOST};
+        server http://api:8081;
      }
 
     server {
