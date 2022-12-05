@@ -8,8 +8,6 @@ services:
     client:
         image: drewjocham/client:latest
         environment:
-            - API_HOST=${API_HOST:-localhost}
-        env_file:
-            - client/client.env
+            API_HOST: localhost
         ports:
             - "8080:8080"

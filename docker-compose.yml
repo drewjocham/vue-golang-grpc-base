@@ -9,7 +9,7 @@ services:
     client:
         build:
             context: ./client
-        env_file:
-            -   client/.env.local
+        environment:
+            API_HOST: localhost
         ports:
             - "8080:8080"
