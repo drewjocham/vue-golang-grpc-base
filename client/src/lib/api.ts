@@ -16,7 +16,7 @@ export const api = {
 
     async getTest() {
         try{
-            return await grpcClient.get<TestResponse>("/v1/test")
+            return await grpcClient.get<TestResponse>(url + "v1/test")
                 .then(res => {
                     console.log(url.baseUrl)
                     return res.data
