@@ -9,13 +9,13 @@ export class EnvironmentHelper {
 
     public get baseUrl(): string {
         if (EnvironmentHelper.isDevelopment) {
-            return "http://localhost:8081/"
+            return "http://localhost:8081"
         }
         if (EnvironmentHelper.isProduction) {
-            return "http://api:8080/"
+            return "http://api:8081"
         }
 
-        return "http://localhost:8080/";
+        return "http://localhost:8080";
     }
 }
 

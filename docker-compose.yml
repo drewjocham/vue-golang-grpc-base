@@ -9,8 +9,7 @@ services:
     client:
         build:
             context: ./client
-        environment:
-            - API_HOST=${API_HOST:-localhost}
-            - NODE_ENV=${NODE_ENV:-development}
+        env_file:
+            -   client/.env
         ports:
             - "8080:8080"
