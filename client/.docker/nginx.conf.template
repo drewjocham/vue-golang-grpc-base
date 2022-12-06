@@ -46,7 +46,7 @@ http {
 
          server {
              server_name localhost drewjocham.com www.drewjocham.com;
-             listen 80;
+             listen 8080;
 
              root /usr/share/nginx/html;
 
