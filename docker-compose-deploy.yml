@@ -2,12 +2,18 @@ version: '3.0'
 services:
     api:
         image: drewjocham/api:latest
+        networks:
+            - personal
         ports:
             - "8082:8082" # gRPC
             - "8081:8081" # gRPC Gateway
     client:
         image: drewjocham/client:latest
         environment:
-            - API_HOST = localhost
+            - API_HOST=localhost
+        networks:
+            - personal
         ports:
             - "8080:8080"
+networks:
+    personal:
