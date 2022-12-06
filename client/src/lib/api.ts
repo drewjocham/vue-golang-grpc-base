@@ -12,13 +12,13 @@ const grpcClient: AxiosInstance = axios.create({
 
 const url = new EnvironmentHelper()
 
-//axios.defaults.baseURL = url.baseUrl
+axios.defaults.baseURL = url.baseUrl
 
 export const api = {
 
     async getTest() {
         try{
-            return await grpcClient.get<TestResponse>(url.baseUrl + "v1/test")
+            return await grpcClient.get<TestResponse>(url.baseUrl + "/v1/test")
                 .then(res => {
                     console.log(url.baseUrl)
                     return res.data

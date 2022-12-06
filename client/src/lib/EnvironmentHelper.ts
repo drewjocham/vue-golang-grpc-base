@@ -12,7 +12,7 @@ export class EnvironmentHelper {
             return "http://localhost:8081"
         }
         if (EnvironmentHelper.isProduction) {
-            return "/"
+            return "http://api:8081"
         }
         // wrong port number - something is wrong!
         return "http://localhost:8080";

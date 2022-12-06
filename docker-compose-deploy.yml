@@ -11,9 +11,10 @@ services:
         image: drewjocham/client:latest
         environment:
             - API_HOST=localhost
+            - NODE_ENV=development
         networks:
             - personal
         ports:
-            - "8080:8080"
+            - "80:8080"
 networks:
     personal:
