@@ -13,7 +13,7 @@ services:
             context: ./client
         environment:
             - API_HOST=api
-            - NODE_ENV=development
+            - NODE_ENV=production
         env_file:
             -   client/.env.local
         networks:

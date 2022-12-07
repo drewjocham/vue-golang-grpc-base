@@ -12,7 +12,7 @@ export class EnvironmentHelper {
             return "http://localhost:8081"
         }
         if (EnvironmentHelper.isProduction) {
-            return "http://api"
+            return "http://localhost"
         }
 
         return "/";
