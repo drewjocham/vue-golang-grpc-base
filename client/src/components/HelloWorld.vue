@@ -17,7 +17,6 @@ export default class HelloWorld extends Vue {
     msg!: string
     message = "hi"
 
-
     onExpand() {
       // eventBus.$emit('test-event', this.message)
     }

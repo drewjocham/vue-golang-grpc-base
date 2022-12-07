@@ -21,6 +21,14 @@ up: ## start docker compose
 down: ## start docker compose
 	docker-compose down
 
+.PHONY: dockerhub-image
+dockerhub-image: ## start docker with dockerhub image
+	docker-compose -f docker-compose-deploy.yml up
+
+.PHONY: dockerhub-image-down
+dockerhub-image-down: ## stop docker with dockerhub image
+	docker-compose -f docker-compose-deploy.yml down
+
 .PHONY: mod-vendor
 mod-vendor: ## Download, verify and vendor dependencies
 	cd api && go mod tidy && go mod download && go mod verify && go mod vendor

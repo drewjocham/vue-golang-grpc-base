@@ -14,8 +14,12 @@ jobs:
               path: ~/api
         -   setup_remote_docker: # (2)
                 docker_layer_caching: true # (3)
-        -   run: cd api && go get -v -t -d ./...
-        -   run: cd api && go build -o main .
+        -   run:
+                name: Go install, vendor, tidy, download
+                command: cd api && go get -v -t -d ./...
+        -   run:
+                name: Go build
+                command: cd api && go build -o main .
         -   deploy:
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "main" ]; then
@@ -42,18 +46,23 @@ jobs:
               name: Install Dependencies
               command: cd client && yarn install --immutable
         -   run:
-                name: Build Client
-                command: cd client && yarn build
+              name: Build Client
+              command: cd client && yarn build
         -   deploy:
                 command: |
-                    if [ "${CIRCLE_BRANCH}" == "main" ]; then
+                    if [ "${CIRCLE_BRANCH}" == "deploy_over_ssh" ]; then
                       cd client && docker build -t drewjocham/client:${CIRCLE_SHA1} .
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                       docker push drewjocham/client:${CIRCLE_SHA1}
                       docker tag drewjocham/client:${CIRCLE_SHA1} drewjocham/client:latest
                       docker push drewjocham/client:latest
                     fi
-
+  #deployment:
+  #  - steps:
+  #    - run:
+  #        name: Deploy Over SSH
+  #        command: |
+  #          ssh root@$34.23.236.49 "docker-composer up -d"
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
