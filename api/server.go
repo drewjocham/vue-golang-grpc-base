@@ -1,82 +1,87 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"github.com/interviews/internal/config"
-	"github.com/interviews/internal/questions"
-	"github.com/interviews/internal/rest"
-	"github.com/interviews/proto/api"
-	"golang.org/x/sync/errgroup"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-	"net"
-	"net/http"
-	"strconv"
+    "context"
+    "fmt"
+    "github.com/interviews/internal/config"
+    "github.com/interviews/internal/questions"
+    "github.com/interviews/internal/rest"
+    "github.com/interviews/proto/api"
+    "golang.org/x/sync/errgroup"
+    "google.golang.org/grpc"
+    "google.golang.org/grpc/credentials/insecure"
+    "net"
+    "net/http"
+    "strconv"
 )
 
 func startServer() error {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+    ctx, cancel := context.WithCancel(context.Background())
+    defer cancel()
 
-	cfg, err := config.NewConfig()
+    cfg, err := config.NewConfig()
 
-	g, _ := errgroup.WithContext(ctx)
+    g, _ := errgroup.WithContext(ctx)
 
-	apiConn, err := grpc.Dial(
-		cfg.Server.ServerAddress,
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithChainUnaryInterceptor())
+    apiConn, err := grpc.Dial(
+        cfg.Server.ServerAddress,
+        grpc.WithTransportCredentials(insecure.NewCredentials()),
+        grpc.WithChainUnaryInterceptor())
 
-	if err != nil {
-		return err
-	}
-	defer apiConn.Close()
+    if err != nil {
+        return err
+    }
+    defer func(apiConn *grpc.ClientConn) {
+        err := apiConn.Close()
+        if err != nil {
+            // handle error here
+        }
+    }(apiConn)
 
-	listen, err := net.Listen("tcp", ":"+strconv.Itoa(cfg.Server.GRPCPort))
-	if err != nil {
-		return err
-	}
+    listen, err := net.Listen("tcp", ":"+strconv.Itoa(cfg.Server.GRPCPort))
+    if err != nil {
+        return err
+    }
 
-	server := grpc.NewServer(grpc.ChainUnaryInterceptor())
+    server := grpc.NewServer(grpc.ChainUnaryInterceptor())
 
-	apiServer := questions.NewApiServiceServer()
+    apiServer := questions.NewApiServiceServer()
 
-	api.RegisterApiServiceServer(server, apiServer)
+    api.RegisterApiServiceServer(server, apiServer)
 
-	// GRPC server
-	g.Go(func() error {
-		fmt.Println("Starting server on port", strconv.Itoa(cfg.Server.GRPCPort))
+    // GRPC server
+    g.Go(func() error {
+        fmt.Println("Starting server on port", strconv.Itoa(cfg.Server.GRPCPort))
 
-		return server.Serve(listen)
-	})
+        return server.Serve(listen)
+    })
 
-	var httpServer http.Server
+    var httpServer http.Server
 
-	// Run Http Server with gRPC gateway
-	g.Go(func() error {
-		fmt.Println("Starting Http sever (port {}) and gRPC gateway (port {})",
-			strconv.Itoa(cfg.Server.HTTPPort),
-			strconv.Itoa(cfg.Server.GRPCPort),
-		)
+    // Run Http Server with gRPC gateway
+    g.Go(func() error {
+        fmt.Println("Starting Http sever (port {}) and gRPC gateway (port {})",
+            strconv.Itoa(cfg.Server.HTTPPort),
+            strconv.Itoa(cfg.Server.GRPCPort),
+        )
 
-		return rest.RunHttpServer(
-			&httpServer,
-			":"+strconv.Itoa(cfg.Server.HTTPPort),
-			":"+strconv.Itoa(cfg.Server.GRPCPort),
-			"/webapi",
-		)
-	})
+        return rest.RunHttpServer(
+            &httpServer,
+            ":"+strconv.Itoa(cfg.Server.HTTPPort),
+            ":"+strconv.Itoa(cfg.Server.GRPCPort),
+            "/webapi",
+        )
+    })
 
-	return g.Wait()
+    return g.Wait()
 
 }
 
 func main() {
 
-	err := startServer()
-	if err != nil {
-		return
-	}
+    err := startServer()
+    if err != nil {
+        return
+    }
 
 }

@@ -2,7 +2,6 @@ import axios, {AxiosInstance} from "axios";
 import {TestResponse} from "@/proto/api_pb";
 import {EnvironmentHelper} from "@/lib/EnvironmentHelper";
 
-
 const grpcClient: AxiosInstance = axios.create({
     headers: {
         'content-type': 'application/json',
