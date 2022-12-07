@@ -1,6 +1,0 @@
-name: personal-playground
-description: playing with pulumi
-runtime:
-    name: python
-    options:
-        virtualenv: venv

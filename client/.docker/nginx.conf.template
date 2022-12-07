@@ -48,6 +48,9 @@ http {
          server_name localhost drewjocham.com www.drewjocham.com;
          listen 8080;
 
+         ssl_certificate     www.example.com.crt;
+         ssl_certificate_key www.example.com.key;
+
          root /usr/share/nginx/html;
 
          access_log /var/log/nginx/access.log;
