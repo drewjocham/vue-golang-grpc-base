@@ -10,7 +10,7 @@ services:
     client:
         image: drewjocham/client:latest
         environment:
-            - API_HOST=localhost
+            - API_HOST=api
             - NODE_ENV=development
         networks:
             - personal
