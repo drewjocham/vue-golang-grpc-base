@@ -3,6 +3,7 @@ package questions
 import (
 	"context"
 	"github.com/interviews/proto/api"
+	"github.com/interviews/utils/logger"
 )
 
 type apiServiceServer struct {
@@ -15,6 +16,9 @@ func NewApiServiceServer() api.ApiServiceServer {
 
 func (s *apiServiceServer) Test(context context.Context, req *api.TestRequest) (*api.TestResponse, error) {
 	println(req.Name)
+	clog := logger.GetLoggerFromContext(context)
+
+	clog.Info("Received request...")
 
 	return &api.TestResponse{
 		Name: "Drew Jocham",
