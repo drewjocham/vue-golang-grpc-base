@@ -1,4 +1,4 @@
-package questions
+package service
 
 import (
 	"context"
@@ -15,7 +15,6 @@ func NewApiServiceServer() api.ApiServiceServer {
 }
 
 func (s *apiServiceServer) Test(context context.Context, req *api.TestRequest) (*api.TestResponse, error) {
-	println(req.Name)
 	clog := logger.GetLoggerFromContext(context)
 
 	clog.Info("Received request...")

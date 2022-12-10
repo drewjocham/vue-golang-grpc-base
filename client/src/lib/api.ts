@@ -11,6 +11,8 @@ const grpcClient: AxiosInstance = axios.create({
 
 const url = new EnvironmentHelper()
 
+axios.defaults.url = url.baseUrl
+
 export const api = {
 
     async getTest() {
