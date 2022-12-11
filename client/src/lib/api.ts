@@ -2,7 +2,6 @@ import axios, {AxiosInstance} from "axios";
 import {TestResponse} from "@/proto/api_pb";
 import {EnvironmentHelper} from "@/lib/EnvironmentHelper";
 
-
 const grpcClient: AxiosInstance = axios.create({
     headers: {
         'content-type': 'application/json',
@@ -18,7 +17,8 @@ export const api = {
         try{
             return await grpcClient.get<TestResponse>(url.baseUrl + "/v1/test")
                 .then(res => {
-                    console.log(url.baseUrl)
+                    console.log(res.data)
+                    //JSON.parse(res.data.getName())
                     return res.data
                 })
         }catch (err) {

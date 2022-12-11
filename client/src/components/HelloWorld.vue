@@ -7,18 +7,23 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
+import { inject } from 'vue'
 
 @Options({
   props: {
     msg: String
-  }
+  },
 })
 export default class HelloWorld extends Vue {
     msg!: string
     message = "hi"
+    bus = inject('TableKey')
 
     onExpand() {
-      // eventBus.$emit('test-event', this.message)
+        //this.eventBus.emit('age', 22)
+
+        //this.eventBus.emit("test-1", 25);
+
     }
 
 }
