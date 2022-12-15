@@ -49,13 +49,20 @@
         <img src="../assets/Typescript.svg" class="w-16" alt="Typescript" />
         <p class="text-xs py-1">Typescript</p>
       </div>
-      <div
-        class="xyz-in border-2 py-1 col-span-3 border-light-gray rounded-md flex flex-col justify-center items-center"
-      >
+      <div class="xyz-in border-2 py-1 border-light-gray rounded-md flex flex-col justify-center items-center">
+        <img src="../assets/go.svg" class="w-16" alt="Typescript" />
+        <p class="text-xs py-1">GO</p>
+      </div>
+      <div class="xyz-in border-2 py-1 border-light-gray rounded-md flex flex-col justify-center items-center">
+        <img src="../assets/grpc.svg" class="w-16" alt="Typescript" />
+      </div>
+      <div class="xyz-in border-2 py-1 border-light-gray rounded-md flex flex-col justify-center items-center">
+        <img src="../assets/circleci.svg" class="w-16" alt="Typescript" />
+      </div>
+      <div class="xyz-in border-2 py-1 col-span-3 border-light-gray rounded-md flex flex-col justify-center items-center">
         <img src="../assets/Tailwind.svg" class="w-16" alt="Tailwind" />
         <p class="text-xs py-1">Tailwindcss</p>
       </div>
-       {{name}}
     </main>
   </XyzTransitionGroup>
 </template>
@@ -63,7 +70,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 let show = ref(false);
-let name = ref('A random name')
 
 onMounted(() => {
   show.value = true;

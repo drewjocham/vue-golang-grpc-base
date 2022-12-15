@@ -54,7 +54,7 @@
         "name": {
           "type": "string"
         },
-        "age": {
+        "lastName": {
           "type": "string"
         }
       }

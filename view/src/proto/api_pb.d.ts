@@ -29,8 +29,8 @@ export namespace TestRequest {
 export class TestResponse extends jspb.Message { 
     getName(): string;
     setName(value: string): TestResponse;
-    getAge(): string;
-    setAge(value: string): TestResponse;
+    getLastname(): string;
+    setLastname(value: string): TestResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TestResponse.AsObject;
@@ -45,6 +45,6 @@ export class TestResponse extends jspb.Message {
 export namespace TestResponse {
     export type AsObject = {
         name: string,
-        age: string,
+        lastname: string,
     }
 }
