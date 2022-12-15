@@ -1,8 +1,7 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-orbs:
-    kubernetes: circleci/kubernetes@1.3.1
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -11,25 +10,25 @@ jobs:
     docker:
       - image: cimg/go:1.19
     steps:
-        - checkout:
-              path: ~/api
-        -   setup_remote_docker: # (2)
-                docker_layer_caching: true # (3)
-        -   run:
-                name: Go install, vendor, tidy, download
-                command: cd api && go get -v -t -d ./...
-        -   run:
-                name: Go build
-                command: cd api && go build -o main .
-        -   deploy:
-                command: |
-                    if [ "${CIRCLE_BRANCH}" == "main" ]; then
-                      cd api && docker build -t drewjocham/api:${CIRCLE_SHA1} .
-                      docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
-                      docker push drewjocham/api:${CIRCLE_SHA1}
-                      docker tag drewjocham/api:${CIRCLE_SHA1} drewjocham/api:latest
-                      docker push drewjocham/api:latest
-                    fi
+      - checkout:
+          path: ~/api
+      -   setup_remote_docker: # (2)
+            docker_layer_caching: true # (3)
+      -   run:
+            name: Go install, vendor, tidy, download
+            command: cd api && go get -v -t -d ./...
+      -   run:
+            name: Go build
+            command: cd api && go build -o main .
+      -   deploy:
+            command: |
+              if [ "${CIRCLE_BRANCH}" == "main" ]; then
+                cd api && docker build -t drewjocham/api:${CIRCLE_SHA1} .
+                docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
+                docker push drewjocham/api:${CIRCLE_SHA1}
+                docker tag drewjocham/api:${CIRCLE_SHA1} drewjocham/api:latest
+                docker push drewjocham/api:latest
+              fi
   view:
     working_directory: ~/view
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
@@ -39,79 +38,37 @@ jobs:
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
-        - checkout:
-              path: ~/view
-        -   setup_remote_docker: # (2)
-                docker_layer_caching: true # (3)
-        - run:
-              name: Install Dependencies
-              command: cd view && yarn install --immutable
-        -   run:
-              name: Build View
-              command: cd view && yarn build
-        -   deploy:
-                command: |
-                    if [ "${CIRCLE_BRANCH}" == "main" ]; then
-                      cd view && docker build -t drewjocham/view:${CIRCLE_SHA1} .
-                      docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
-                      docker push drewjocham/view:${CIRCLE_SHA1}
-                      docker tag drewjocham/view:${CIRCLE_SHA1} drewjocham/view:latest
-                      docker push drewjocham/view:latest
-                    fi
-    kube_deploy_client:
-        # Update the existing Kubernetes deployment to point to the new image
-        docker:
-           #-   image: google/cloud-sdk:alpine
-            - image: bitnami/kubectl
-        working_directory: ~/repo
-        steps:
-            -   run:
-                    name: Deploy the current commit on this branch to the GKE cluster
-                    command: |
-                        gcloud components install kubectl
-                        echo "${GKE_CD_SERVICE_ACCOUNT_KEY}" > .key.json
-                        gcloud auth activate-service-account --key-file .key.json
-                        gcloud config set compute/zone "${GKE_ZONE}"
-                        gcloud config set project "${GKE_PROJECT}"
-                        gcloud container clusters get-credentials "${GKE_CLUSTER}" --zone "${GKE_ZONE}"
-                        if [ "${CIRCLE_BRANCH}" == "add_go_middleware" ]; then
-                            DEPLOYMENT_PREFIX="production"
-                        else
-                            DEPLOYMENT_PREFIX="staging"
-                        fi
-                        kubectl set image deployment/${DEPLOYMENT_PREFIX}-app ${DEPLOYMENT_PREFIX}-app=gcr.io/${GCR_PROJECT}/myapp:${CIRCLE_SHA1}
-    kube_deploy_api:
-        # Update the existing Kubernetes deployment to point to the new image
-        docker:
-            # -   image: google/cloud-sdk:alpine
-             - image: bitnami/kubectl
-        working_directory: ~/repo
-        steps:
-            -   run:
-                    name: Deploy the current commit on this branch to the GKE cluster
-                    command: |
-                        gcloud components install kubectl
-                        echo "${GKE_CD_SERVICE_ACCOUNT_KEY}" > .key.json
-                        gcloud auth activate-service-account --key-file .key.json
-                        gcloud config set compute/zone "${GKE_ZONE}"
-                        gcloud config set project "${GKE_PROJECT}"
-                        gcloud container clusters get-credentials "${GKE_CLUSTER}" --zone "${GKE_ZONE}"
-                        if [ "${CIRCLE_BRANCH}" == "add_go_middleware" ]; then
-                            DEPLOYMENT_PREFIX="production"
-                        else
-                            DEPLOYMENT_PREFIX="staging"
-                        fi
-                        kubectl set image deployment/${DEPLOYMENT_PREFIX}-app ${DEPLOYMENT_PREFIX}-app=gcr.io/${GCR_PROJECT}/myapp:${CIRCLE_SHA1}
-# kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1
+      - checkout:
+          path: ~/view
+      -   setup_remote_docker: # (2)
+            docker_layer_caching: true # (3)
+      - run:
+          name: Install Dependencies
+          command: cd view && yarn install --immutable
+      -   run:
+            name: Build View
+            command: cd view && yarn build
+      -   deploy:
+            command: |
+              if [ "${CIRCLE_BRANCH}" == "main" ]; then
+                cd view && docker build -t drewjocham/view:${CIRCLE_SHA1} .
+                docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
+                docker push drewjocham/view:${CIRCLE_SHA1}
+                docker tag drewjocham/view:${CIRCLE_SHA1} drewjocham/view:latest
+                docker push drewjocham/view:latest
+              fi
+  #deployment:
+  #  - steps:
+  #    - run:
+  #        name: Deploy Over SSH
+  #        command: |
+  #          ssh root@$34.23.236.49 "docker-composer up -d"
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-    hobby-project-setup:
-        jobs:
-        - view:
-            context: docker # env context name
-        - api:
-            context: docker
-        - kube_deploy_api:
-                context: stackIT
-        - kube_deploy_client:
-                context: stackIT
-
+  hobby-project-setup:
+    jobs:
+      - view:
+          context: docker # env context name
+      - api:
+          context: docker
