@@ -45,7 +45,7 @@ proto: ## Generate protobuf code
 		   --grpc-gateway_out . \
 		   --grpc-gateway_opt generate_unbound_methods=true \
 		   --plugin=protoc-gen-grpc-gateway=${GOPATH}/bin/protoc-gen-grpc-gateway \
-		   --openapiv2_out . \
+		   --openapiv2_out ${PROJ_PATH}/api/webapi \
            --openapiv2_opt logtostderr=true \
            --openapiv2_opt generate_unbound_methods=true
 
