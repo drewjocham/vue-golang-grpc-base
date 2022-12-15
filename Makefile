@@ -1,9 +1,9 @@
 PROJ_PATH=${CURDIR}
 PROTO_DEST=./src/proto
 
-.PHONY: build-client
+.PHONY: build-view
 build-client: ## build client for production
-	cd client && yarn build
+	cd view && yarn build
 
 .PHONY: build-api
 build-api: ## build api for production
@@ -50,7 +50,7 @@ proto: ## Generate protobuf code
            --openapiv2_opt generate_unbound_methods=true
 
 	# JavaScript code generation
-	cd client && yarn run grpc_tools_node_protoc \
+	cd view && yarn run grpc_tools_node_protoc \
         --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
         --ts_out=grpc_js:${PROTO_DEST} \
         --js_out=import_style=commonjs:${PROTO_DEST} \

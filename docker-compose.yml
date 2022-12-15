@@ -8,14 +8,14 @@ services:
             - "8081:8081" # gRPC Gateway
         networks:
             - personal
-    client:
+    view:
         build:
-            context: ./client
+            context: ./view
         environment:
             - API_HOST=api
             - NODE_ENV=production
         env_file:
-            -   client/.env.local
+            -   view/.env.local
         networks:
             - personal
         ports:

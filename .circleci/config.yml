@@ -29,8 +29,8 @@ jobs:
                       docker tag drewjocham/api:${CIRCLE_SHA1} drewjocham/api:latest
                       docker push drewjocham/api:latest
                     fi
-  client:
-    working_directory: ~/client
+  view:
+    working_directory: ~/view
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -39,23 +39,23 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
         - checkout:
-              path: ~/client
+              path: ~/view
         -   setup_remote_docker: # (2)
                 docker_layer_caching: true # (3)
         - run:
               name: Install Dependencies
-              command: cd client && yarn install --immutable
+              command: cd view && yarn install --immutable
         -   run:
-              name: Build Client
-              command: cd client && yarn build
+              name: Build View
+              command: cd view && yarn build
         -   deploy:
                 command: |
-                    if [ "${CIRCLE_BRANCH}" == "deploy_over_ssh" ]; then
-                      cd client && docker build -t drewjocham/client:${CIRCLE_SHA1} .
+                    if [ "${CIRCLE_BRANCH}" == "main" ]; then
+                      cd client && docker build -t drewjocham/view:${CIRCLE_SHA1} .
                       docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
-                      docker push drewjocham/client:${CIRCLE_SHA1}
-                      docker tag drewjocham/client:${CIRCLE_SHA1} drewjocham/client:latest
-                      docker push drewjocham/client:latest
+                      docker push drewjocham/view:${CIRCLE_SHA1}
+                      docker tag drewjocham/view:${CIRCLE_SHA1} drewjocham/view:latest
+                      docker push drewjocham/view:latest
                     fi
   #deployment:
   #  - steps:
@@ -68,7 +68,7 @@ jobs:
 workflows:
     hobby-project-setup:
         jobs:
-        - client:
+        - view:
             context: docker # env context name
         - api:
             context: docker
