@@ -7,8 +7,8 @@ services:
         ports:
             - "8082:8082" # gRPC
             - "8081:8081" # gRPC Gateway
-    client:
-        image: drewjocham/client:latest
+    view:
+        image: drewjocham/view:latest
         environment:
             - API_HOST=api
             - NODE_ENV=development
