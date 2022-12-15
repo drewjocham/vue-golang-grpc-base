@@ -4,7 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/interviews/internal/config"
-	"github.com/interviews/internal/questions"
+	"github.com/interviews/internal/service"
+
 	"github.com/interviews/internal/rest"
 	"github.com/interviews/proto/api"
 	"golang.org/x/sync/errgroup"
@@ -31,7 +32,12 @@ func startServer() error {
 	if err != nil {
 		return err
 	}
-	defer apiConn.Close()
+	defer func(apiConn *grpc.ClientConn) {
+		err := apiConn.Close()
+		if err != nil {
+			// handle error here
+		}
+	}(apiConn)
 
 	listen, err := net.Listen("tcp", ":"+strconv.Itoa(cfg.Server.GRPCPort))
 	if err != nil {
@@ -40,7 +46,7 @@ func startServer() error {
 
 	server := grpc.NewServer(grpc.ChainUnaryInterceptor())
 
-	apiServer := questions.NewApiServiceServer()
+	apiServer := service.NewApiServiceServer()
 
 	api.RegisterApiServiceServer(server, apiServer)
 
