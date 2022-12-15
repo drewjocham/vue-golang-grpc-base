@@ -31,7 +31,7 @@
         <li>
           <a
             class="inline-flex items-center px-3 py-2 rounded-lg"
-            href="https://github.com/atif0075"
+            href="https://github.com/drewjocham/vue-golang-grpc-base"
             target="_blank"
           >
             Github

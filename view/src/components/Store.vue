@@ -76,6 +76,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue-demi";
 import { useStore } from "../store/store";
+
 let Name = ref("");
 let show = ref(false);
 onMounted(() => {
@@ -92,7 +93,7 @@ let saveName = () => {
 };
 let reset = () => {
   store.show = false;
-  store.name = "Atif";
+  store.name = "Drew";
   setTimeout(() => {
     store.show = true;
   }, 1);
