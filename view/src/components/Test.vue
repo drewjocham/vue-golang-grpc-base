@@ -1,12 +1,12 @@
 <template>
     <button v-on:click="submit()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Button
+        gRPC request
     </button>
     <div class="text-white">
-       <div>
-           Request from backend
-       </div>
-        Name: {{username}} Age {{age}}
+      <div class="grid grid-cols-2 gap-4">
+        <div>{{firstName}}</div>
+        <div>{{lastName}}</div>
+      </div>
     </div>
 
 </template>
@@ -20,16 +20,16 @@ export default {
 
     setup() {
 
-        const username = ref('');
-        const age = ref('');
+        const firstName = ref('');
+        const lastName = ref('');
 
         const submit = async () => {
             try {
                 const response = await api.getTest()
 
                 if (response != null) {
-                    username.value = response.name
-                    age.value = response.age
+                  firstName.value = response.name
+                  lastName.value = response.lastName
                 }
             } catch (error) {
                 console.log('Error while getting the response:', error)
@@ -37,9 +37,9 @@ export default {
         }
 
         return {
-            username,
-            age,
-            submit
+          firstName,
+          lastName,
+          submit
         }
     },
 

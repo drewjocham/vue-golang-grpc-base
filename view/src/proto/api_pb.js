@@ -230,7 +230,7 @@ proto.TestResponse.prototype.toObject = function(opt_includeInstance) {
 proto.TestResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    age: jspb.Message.getFieldWithDefault(msg, 2, "")
+    lastname: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -273,7 +273,7 @@ proto.TestResponse.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setAge(value);
+      msg.setLastname(value);
       break;
     default:
       reader.skipField();
@@ -311,7 +311,7 @@ proto.TestResponse.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getAge();
+  f = message.getLastname();
   if (f.length > 0) {
     writer.writeString(
       2,
@@ -340,10 +340,10 @@ proto.TestResponse.prototype.setName = function(value) {
 
 
 /**
- * optional string age = 2;
+ * optional string lastName = 2;
  * @return {string}
  */
-proto.TestResponse.prototype.getAge = function() {
+proto.TestResponse.prototype.getLastname = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -352,7 +352,7 @@ proto.TestResponse.prototype.getAge = function() {
  * @param {string} value
  * @return {!proto.TestResponse} returns this
  */
-proto.TestResponse.prototype.setAge = function(value) {
+proto.TestResponse.prototype.setLastname = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
