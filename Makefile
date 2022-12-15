@@ -33,6 +33,13 @@ dockerhub-image: ## start docker with dockerhub image
 dockerhub-image-down: ## stop docker with dockerhub image
 	docker-compose -f docker-compose-deploy.yml down
 
+# https://docs.sonarqube.org/latest/try-out-sonarqube/
+.PHONY: sonar
+sonar: # sonarqube image
+	docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:8.9.10-community
+# login: admin
+# password: admin
+
 .PHONY: mod-vendor
 mod-vendor: ## Download, verify and vendor dependencies
 	cd api && go mod tidy && go mod download && go mod verify && go mod vendor
