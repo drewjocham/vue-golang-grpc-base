@@ -18,6 +18,9 @@ jobs:
             name: Go install, vendor, tidy, download
             command: cd api && go get -v -t -d ./...
       -   run:
+              name: linter
+              command: cd api && golangci-lint run
+      -   run:
             name: Go build
             command: cd api && go build -o main .
       -   deploy:

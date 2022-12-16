@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/interviews/internal/config"
-	"github.com/interviews/internal/service"
-
 	"github.com/interviews/internal/rest"
+	"github.com/interviews/internal/service"
 	"github.com/interviews/proto/api"
+	"github.com/interviews/utils/logger"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -20,7 +20,12 @@ func startServer() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	clog := logger.GetLoggerFromContext(ctx)
+
 	cfg, err := config.NewConfig()
+	if err != nil {
+		return err
+	}
 
 	g, _ := errgroup.WithContext(ctx)
 
@@ -35,7 +40,7 @@ func startServer() error {
 	defer func(apiConn *grpc.ClientConn) {
 		err := apiConn.Close()
 		if err != nil {
-			// handle error here
+			clog.Error(err)
 		}
 	}(apiConn)
 
