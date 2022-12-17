@@ -37,6 +37,10 @@ dockerhub-image-down: ## stop docker with dockerhub image
 mod-vendor: ## Download, verify and vendor dependencies
 	cd api && go mod tidy && go mod download && go mod verify && go mod vendor
 
+.PHONY: linter
+linter: ## Run linter
+	cd api && golangci-lint run
+
 # go install \
     github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest \
     github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
