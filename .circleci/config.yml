@@ -25,7 +25,7 @@ jobs:
             command: cd api && go build -o main .
       -   deploy:
             command: |
-              if [ "${CIRCLE_BRANCH}" == "main" ]; then
+              if [ "${CIRCLE_BRANCH}" == "silly" ]; then
                 cd api && docker build -t drewjocham/api:${CIRCLE_SHA1} .
                 docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                 docker push drewjocham/api:${CIRCLE_SHA1}
@@ -53,7 +53,7 @@ jobs:
             command: cd view && yarn build
       -   deploy:
             command: |
-              if [ "${CIRCLE_BRANCH}" == "main" ]; then
+              if [ "${CIRCLE_BRANCH}" == "silly" ]; then
                 cd view && docker build -t drewjocham/view:${CIRCLE_SHA1} .
                 docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} https://index.docker.io/v1/
                 docker push drewjocham/view:${CIRCLE_SHA1}

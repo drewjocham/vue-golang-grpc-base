@@ -20,7 +20,7 @@ func (s *apiServiceServer) Test(context context.Context, req *api.TestRequest) (
 	clog.Info("Received request...")
 
 	return &api.TestResponse{
-		Name:     "Drew ",
+		Name:     "Sonal ",
 		LastName: "Jocham",
 	}, nil
 }

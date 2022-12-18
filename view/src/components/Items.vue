@@ -63,6 +63,10 @@
         <img src="../assets/Tailwind.svg" class="w-16" alt="Tailwind" />
         <p class="text-xs py-1">Tailwindcss</p>
       </div>
+        <div class="xyz-in border-2 py-1 col-span-3 border-light-gray rounded-md flex flex-col justify-center items-center">
+            <img src="../assets/marry-me.svg" class="w-16" alt="Tailwind" />
+            <p class="text-xs py-1">Indian girl in a german world</p>
+        </div>
     </main>
   </XyzTransitionGroup>
 </template>
