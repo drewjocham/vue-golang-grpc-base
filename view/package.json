@@ -8,7 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@animxyz/vue3": "^0.6.6",
+    "@animxyz/vue3": "^0.6.7",
     "@grpc/grpc-js": "^1.8.0",
     "@types/google-protobuf": "^3.15.6",
     "@types/node": "^18.11.15",
