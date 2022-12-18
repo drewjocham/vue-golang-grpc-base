@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@animxyz/core/-/core-0.6.6.tgz#2c5eae54c7a6b98c3be79ae16fc1ec68991f67cc"
   integrity sha512-NtAA/G0Gq3hzAiL6yuE/4U8IgHMPUl3MxbWUbhO443T9UCsf9rBY94P5aK79Zd+/529FeoNdDphIOcOZLsI2sA==
 
-"@animxyz/vue3@^0.6.6":
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/@animxyz/vue3/-/vue3-0.6.6.tgz#473b788d07842db7dd78cf317cc7a6b4bc9fbc89"
-  integrity sha512-ljHz97eNJMBLA2qVX3UDFHQbwIVKFUbKb6w6QbKUrkITY8oMwBz08ZYTYJguSUERXbpazftMSiaHsgRVnEbV/Q==
+"@animxyz/vue3@^0.6.7":
+  version "0.6.7"
+  resolved "https://registry.yarnpkg.com/@animxyz/vue3/-/vue3-0.6.7.tgz#ca51516a3aa35d50170322411d4635a87a756908"
+  integrity sha512-tLx4HfFcoxR5wgIMFDrmjS2mZifFRNMiwn7skPT3as9ViuCW3QdCsBIDYY2tR37GSvSUC1NhNwkkCZ1pt0C+Hg==
   dependencies:
     "@animxyz/core" "^0.6.6"
     clsx "^1.1.1"
