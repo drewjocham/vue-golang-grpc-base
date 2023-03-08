@@ -1,7 +1,7 @@
 # Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
 # Start from the latest golang base image
-FROM golang:1.19.3-alpine3.16
+FROM golang:1.19.6-alpine3.16
 
 # Configure these later in a pipeline
 ARG COMMIT_ID
