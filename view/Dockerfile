@@ -1,4 +1,4 @@
-FROM nginx:1.21.3-alpine
+FROM nginx:1.23.3-alpine
 
 # Configure these later in a pipeline, maybe circle CI?
 ARG COMMIT_ID
