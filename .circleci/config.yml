@@ -22,7 +22,7 @@ jobs:
               command: cd api && golangci-lint run
       -   run:
             name: Go build
-            command: cd api && go build -o main .
+            command: cd api/cmd && go build -o main .
       -   deploy:
             command: |
               if [ "${CIRCLE_BRANCH}" == "main" ]; then
