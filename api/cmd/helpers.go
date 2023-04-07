@@ -16,7 +16,7 @@ import (
    to run any logic in a separate background goroutine.
 */
 
-//nolint:unused // is not currently used but will be later.
+//nolint:unused // is not currently used but will be later..
 func backgroundTask(fn func() error) {
 	var wg sync.WaitGroup
 
