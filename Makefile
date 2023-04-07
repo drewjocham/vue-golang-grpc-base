@@ -36,7 +36,7 @@ dockerhub-image-down: ## stop docker with dockerhub image
 
 .PHONY: mod-vendor
 mod-vendor: ## Download, verify and vendor dependencies
-	cd api && go mod tidy && go mod download && go mod verify && go mod vendor
+	cd api && go mod tidy && go mod download && go mod verify
 
 .PHONY: linter
 linter: ## Run linter
