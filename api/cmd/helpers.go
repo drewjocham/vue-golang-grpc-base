@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/interviews/internal/config"
-	"github.com/interviews/utils/logger"
+	log "github.com/interviews/utils/logger"
 	"sync"
 )
 
@@ -17,28 +16,25 @@ import (
    to run any logic in a separate background goroutine.
 */
 
-type application struct {
-	config config.Config
-	log    *logger.Logger
-	wg     sync.WaitGroup
-}
+//nolint:unused // is not currently used but will be later.
+func backgroundTask(fn func() error) {
+	var wg sync.WaitGroup
 
-func (app *application) backgroundTask(fn func() error) {
-	app.wg.Add(1)
+	wg.Add(1)
 
 	go func() {
-		defer app.wg.Done()
+		defer wg.Done()
 
 		defer func() {
 			err := recover()
 			if err != nil {
-				app.log.Error(fmt.Errorf("%s", err))
+				log.Error(fmt.Errorf("%s", err))
 			}
 		}()
 
 		err := fn()
 		if err != nil {
-			app.log.Error(err)
+			log.Error(err)
 		}
 	}()
 }
