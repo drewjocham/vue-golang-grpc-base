@@ -7,7 +7,7 @@ import (
 	"github.com/interviews/internal/rest"
 	"github.com/interviews/internal/service"
 	"github.com/interviews/proto/api"
-	"github.com/interviews/utils/logger"
+	log "github.com/interviews/utils/logger"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -20,7 +20,7 @@ func startServer() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	clog := logger.GetLoggerFromContext(ctx)
+	clog := log.GetLoggerFromContext(ctx)
 
 	cfg, err := config.NewConfig()
 	if err != nil {
