@@ -1,8 +1,9 @@
 PROJ_PATH=${CURDIR}
 PROTO_DEST=./src/proto
+.DEFAULT_GOAL := help
 
 .PHONY: install-view
-build-view: ## install node_modules
+install-view: ## install node_modules
 	cd view && yarn
 
 .PHONY: build-view
@@ -11,17 +12,17 @@ build-view: ## build client for production
 
 .PHONY: build-api
 build-api: ## build api for production
-	cd api && go build
+	cd api/cmd && go build
 
 .PHONY: docker-build
-build: ## start docker compose
+docker-build: ## start docker compose
 	docker-compose build
 
-.PHONY: docker-up
+.PHONY: up
 up: ## start docker compose
 	docker-compose up -d
 
-.PHONY: docker-down
+.PHONY: down
 down: ## start docker compose
 	docker-compose down
 
@@ -66,4 +67,13 @@ proto: ## Generate protobuf code
         -I ${PROJ_PATH}/proto \
         ${PROJ_PATH}/proto/*.proto
 
-
+# https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
+.PHONY: help
+help: ## Shows the help
+	@echo 'Usage: make <OPTIONS> ... <TARGETS>'
+	@echo ''
+	@echo 'Available targets are:'
+	@echo ''
+	@grep -E '^[ a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+        awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+	@echo ''

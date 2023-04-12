@@ -15,14 +15,14 @@ jobs:
       -   setup_remote_docker: # (2)
             docker_layer_caching: true # (3)
       -   run:
-            name: Go install, vendor, tidy, download
-            command: cd api && go get -v -t -d ./...
+            name: Go install, tidy, download
+            command: cd api && go get -t -d ./...
       -   run:
               name: linter
               command: cd api && golangci-lint run
       -   run:
             name: Go build
-            command: cd api && go build -o main .
+            command: cd api/cmd && go build -o main .
       -   deploy:
             command: |
               if [ "${CIRCLE_BRANCH}" == "main" ]; then
