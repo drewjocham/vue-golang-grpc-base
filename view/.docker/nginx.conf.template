@@ -44,9 +44,24 @@ http {
         server ${API_HOST}:8081;
      }
 
+     # ssl_session_cache   shared:SSL:10m;
+     # ssl_session_timeout 10m;
+
      server {
-         server_name localhost drewjocham.com www.drewjocham.com;
          listen 8080;
+
+         # SSL configuration
+         listen 443 ssl;
+         listen [::]:443 ssl;
+
+         server_name localhost drewjocham.com www.drewjocham.com;
+
+         keepalive_timeout   70;
+
+         # storing the public and private together is not best practice.
+         # for a real app change this!!
+         ssl_certificate     selfsigned.crt;
+         ssl_certificate_key selfsigned.key;
 
          root /usr/share/nginx/html;
 
