@@ -13,7 +13,7 @@ For local development enter localhost; when creating a `.key` and `.crt` for an 
 
 ---
 
-`sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout selfsigned.key -out selfsigned.crt` 
+`openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout selfsigned.key -out selfsigned.crt` 
 
 ---
 
