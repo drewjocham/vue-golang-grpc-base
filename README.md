@@ -9,3 +9,6 @@
 - `make up` - start docker environment
 - `make down` - stop docker environment
 - `make` / `make help` - show available commands
+
+## SSL Config
+[ssl-setup.md](./view/.docker/ssl-setup.md)
