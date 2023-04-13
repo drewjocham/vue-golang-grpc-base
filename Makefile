@@ -12,7 +12,7 @@ build-view: ## build client for production
 
 .PHONY: build-api
 build-api: ## build api for production
-	cd api && go build
+	cd api/cmd && go build
 
 .PHONY: docker-build
 docker-build: ## start docker compose

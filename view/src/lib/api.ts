@@ -2,6 +2,7 @@ import axios, {AxiosInstance} from "axios";
 import { EnvironmentHelper } from "./EnvironmentHelper";
 import { TestResponse } from "../proto/api_pb";
 
+
 const url = new EnvironmentHelper()
 
 const grpcClient: AxiosInstance = axios.create({
@@ -16,7 +17,7 @@ export const api = {
 
     async getTest() {
         try{
-            return await grpcClient.get<TestResponse>("/v1/test")
+            return await grpcClient.get<TestResponse.AsObject>("/v1/test")
                 .then(res => {
                     console.log(res);
                     return res.data

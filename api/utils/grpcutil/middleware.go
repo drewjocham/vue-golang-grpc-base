@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/interviews/utils/errorutil"
-	"github.com/interviews/utils/logger"
+	log "github.com/interviews/utils/logger"
 	"time"
 
 	"github.com/google/uuid"
@@ -25,9 +25,9 @@ func (m *Middleware) ServerErrorInterceptor(ctx context.Context, req interface{}
 ) (interface{}, error) {
 	resp, err := handler(ctx, req)
 	if err != nil {
-		clog := logger.GetLoggerFromContext(ctx)
+		clog := log.GetLoggerFromContext(ctx)
 
-		var apierr *logger.APIError
+		var apierr *log.APIError
 
 		ok := errors.As(err, &apierr)
 		if !ok {
@@ -57,13 +57,13 @@ func (m *Middleware) ServerLogInterceptor(ctx context.Context, req interface{}, 
 		"correlation-id": corrID,
 	}
 
-	clog := logger.NewWithContext(ctxVals)
+	clog := log.NewWithContext(ctxVals)
 
-	ctx = logger.NewContextWithLogger(ctx, clog)
+	ctx = log.NewContextWithLogger(ctx, clog)
 
 	resp, err := handler(ctx, req)
 
-	clog.DebugCtx("gRPC request", logger.Ctx{
+	clog.DebugCtx("gRPC request", log.Ctx{
 		"method":  info.FullMethod,
 		"req":     req,
 		"resp":    resp,
