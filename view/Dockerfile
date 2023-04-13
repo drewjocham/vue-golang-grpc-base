@@ -13,6 +13,8 @@ RUN rm -rf /etc/nginx/*
 ## Copy the template and mime types
 COPY .docker/nginx.conf.template /etc/nginx/etc/nginx/nginx.conf.template
 COPY .docker/mime.types /etc/nginx/mime.types
+COPY .docker/selfsigned.crt /etc/nginx/selfsigned.crt
+COPY .docker/selfsigned.key /etc/nginx/selfsigned.key
 
 ## Log to stdout / stderr
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
