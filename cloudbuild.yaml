@@ -1,0 +1,35 @@
+# [START cloudbuild_quickstart_build]
+steps:
+    - name: golang:1.20
+      dir: 'api'
+      entrypoint: /bin/bash
+      args:
+        - -c
+        - |
+            go get -t -d ./...
+
+    # Docker api Build
+    -   name: 'gcr.io/cloud-builders/docker'
+        args: [ 'build', '-t',
+                'us-central1-docker.pkg.dev/$PROJECT_ID/drewjocham/vue-golang-grpc-base/api:$SHORT_SHA', '.' ]
+    # Docker push to Google Artifact Registry
+    -   name: 'gcr.io/cloud-builders/docker'
+        args: [ 'push', 'us-central1-docker.pkg.dev/$PROJECT_ID/vue-golang-grpc-base/api/myimage:$SHORT_SHA' ]
+
+    -   name: 'gcr.io/cloud-builders/npm'
+        dir: 'view'
+        args: [ 'install' ]
+
+    # Docker view Build
+    -   name: 'gcr.io/cloud-builders/docker'
+        args: [ 'build', '-t',
+                'us-central1-docker.pkg.dev/$PROJECT_ID/drewjocham/vue-golang-grpc-base/api:$SHORT_SHA', '.' ]
+    # Docker push view to Google Artifact Registry
+    -   name: 'gcr.io/cloud-builders/docker'
+        args: [ 'push', 'us-central1-docker.pkg.dev/$PROJECT_ID/vue-golang-grpc-base/api/myimage:$SHORT_SHA' ]
+
+
+images:
+    - 'us-west2-docker.pkg.dev/$PROJECT_ID/drewjocham/vue-golang-grpc-base/api:tag1'
+    - 'us-west2-docker.pkg.dev/$PROJECT_ID/drewjocham/vue-golang-grpc-base/view:tag1'
+# [END cloudbuild_quickstart_build]
