@@ -11,10 +11,10 @@ steps:
     -   name: 'gcr.io/cloud-builders/docker'
         dir: 'api'
         args: [ 'build', '-t',
-                'us-east1-docker.pkg.dev/personal/drewjocham/vue-golang-grpc-base/api:$SHORT_SHA', '.' ]
+                'us-east1-docker.pkg.dev/personal-311605/drewjocham/vue-golang-grpc-base/api:$SHORT_SHA', '.' ]
     # Docker push to Google Artifact Registry
     -   name: 'gcr.io/cloud-builders/docker'
-        args: [ 'push', 'us-east1-docker.pkg.dev/personal/drewjocham/vue-golang-grpc-base/api:$SHORT_SHA' ]
+        args: [ 'push', 'us-east1-docker.pkg.dev/personal-311605/drewjocham/vue-golang-grpc-base/api:$SHORT_SHA' ]
 
     -   name: 'gcr.io/cloud-builders/npm'
         dir: 'view'
@@ -24,12 +24,12 @@ steps:
     -   name: 'gcr.io/cloud-builders/docker'
         dir: 'view'
         args: [ 'build', '-t',
-                'us-east1-docker.pkg.dev/personal/drewjocham/vue-golang-grpc-base/view:$SHORT_SHA', '.' ]
+                'us-east1-docker.pkg.dev/personal-311605/drewjocham/vue-golang-grpc-base/view:$SHORT_SHA', '.' ]
     # Docker push view to Google Artifact Registry
     -   name: 'gcr.io/cloud-builders/docker'
-        args: [ 'push', 'us-east1-docker.pkg.dev/personal/drewjocham/vue-golang-grpc-base/view:$SHORT_SHA' ]
+        args: [ 'push', 'us-east1-docker.pkg.dev/personal-311605/drewjocham/vue-golang-grpc-base/view:$SHORT_SHA' ]
 
 images:
-    - 'us-west2-docker.pkg.dev/personal/drewjocham/vue-golang-grpc-base/api:tag1'
-    - 'us-west2-docker.pkg.dev/personal/drewjocham/vue-golang-grpc-base/view:tag1'
+    - 'us-west2-docker.pkg.dev/personal-311605/drewjocham/vue-golang-grpc-base/api:$SHORT_SHA'
+    - 'us-west2-docker.pkg.dev/personal-311605/drewjocham/vue-golang-grpc-base/view:$SHORT_SHA'
 # [END cloudbuild_quickstart_build]
