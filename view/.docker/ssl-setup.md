@@ -5,7 +5,7 @@ How to set up SSL
 There is a .crt and .key already present. However, they should be recreated and correctly used. 
 The `.key` should be on the sever or stored by a secret manager and configured to be injected into the container/POD.
 
-When running the below command you will be a lot of questions. The most important one is 
+When running the below listed openssl command you will be prompted to answer several of questions. The most important one is 
 
 `Common Name (e.g. server FQDN or YOUR name) []:server_IP_address`
 

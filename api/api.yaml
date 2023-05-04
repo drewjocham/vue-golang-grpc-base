@@ -1,8 +1,8 @@
 # app.yaml
-runtime: custom
-env: standard
+runtime: go
+env: flex
 # If you have one application, please use "default" for service
-service: default
+service: api
 # VPC Network if you have one
 #network:
 #  name: default
@@ -15,4 +15,4 @@ automatic_scaling:
 resources:
     cpu: 1
     memory_gb: 2
-    disk_size_gb: 15
+    disk_size_gb: 5
