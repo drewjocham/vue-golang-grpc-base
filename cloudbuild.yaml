@@ -38,5 +38,5 @@ steps:
         args: [ 'push', 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/view:$SHORT_SHA' ]
 
 images:
-    - 'us-west2-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/api:$SHORT_SHA'
-    - 'us-west2-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/view:$SHORT_SHA'
+    - 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/api:$SHORT_SHA'
+    - 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/view:$SHORT_SHA'
