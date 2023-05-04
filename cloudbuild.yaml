@@ -29,7 +29,6 @@ steps:
     -   name: 'gcr.io/cloud-builders/docker'
         args: [ 'push', 'us-east1-docker.pkg.dev/personal/vue-golang-grpc-base/api/myimage:$SHORT_SHA' ]
 
-
 images:
     - 'us-west2-docker.pkg.dev/personal/drewjocham/vue-golang-grpc-base/api:tag1'
     - 'us-west2-docker.pkg.dev/personal/drewjocham/vue-golang-grpc-base/view:tag1'
