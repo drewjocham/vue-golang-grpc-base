@@ -22,6 +22,7 @@ steps:
 
     # Docker view Build
     -   name: 'gcr.io/cloud-builders/docker'
+        dir: 'view'
         args: [ 'build', '-t',
                 'us-east1-docker.pkg.dev/personal/drewjocham/vue-golang-grpc-base/api:$SHORT_SHA', '.' ]
     # Docker push view to Google Artifact Registry
