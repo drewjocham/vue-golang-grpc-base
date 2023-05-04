@@ -40,13 +40,23 @@ steps:
     # Deploy api to GCP App Engine
     -   name: "gcr.io/cloud-builders/gcloud"
         dir: 'api'
-        args: [ "app", "deploy" ]
+        args:
+          [
+              "app",
+              "deploy",
+              "--image-url=us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/api:$SHORT_SHA",
+          ]
         timeout: "1600s"
 
     # Deploy view to GCP App Engine
     -   name: "gcr.io/cloud-builders/gcloud"
         dir: 'view'
-        args: [ "app", "deploy" ]
+        args:
+          [
+              "app",
+              "deploy",
+              "--image-url=us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/view:$SHORT_SHA",
+          ]
         timeout: "1600s"
 
 images:
