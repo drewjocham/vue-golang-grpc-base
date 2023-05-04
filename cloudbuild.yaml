@@ -16,9 +16,16 @@ steps:
     # Docker push to Google Artifact Registry
     -   name: 'gcr.io/cloud-builders/docker'
         args: [ 'push', 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/api:$SHORT_SHA' ]
-    -   name: 'gcr.io/cloud-builders/npm'
+
+    # yarn install
+    -   name: 'gcr.io/cloud-builders/yarn'
         dir: 'view'
         args: [ 'install' ]
+
+    # yarn build
+    -   name: 'gcr.io/cloud-builders/yarn'
+        dir: 'view'
+        args: [ 'build' ]
 
     # Docker view Build
     -   name: 'gcr.io/cloud-builders/docker'
