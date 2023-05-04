@@ -10,6 +10,7 @@ steps:
 
     # Docker api Build
     -   name: 'gcr.io/cloud-builders/docker'
+        dir: 'api'
         args: [ 'build', '-t',
                 'us-east1-docker.pkg.dev/personal/drewjocham/vue-golang-grpc-base/api:$SHORT_SHA', '.' ]
     # Docker push to Google Artifact Registry
