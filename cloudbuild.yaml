@@ -1,0 +1,42 @@
+steps:
+    - name: golang:1.20
+      dir: 'api'
+      entrypoint: /bin/bash
+      args:
+        - -c
+        - |
+            go get -t -d ./...
+
+    # Docker api Build
+    -   name: 'gcr.io/cloud-builders/docker'
+        dir: 'api'
+        args: [ 'build', '-t',
+                'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/api:$SHORT_SHA', '.' ]
+
+    # Docker push to Google Artifact Registry
+    -   name: 'gcr.io/cloud-builders/docker'
+        args: [ 'push', 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/api:$SHORT_SHA' ]
+
+    # yarn install
+    -   name: 'gcr.io/cloud-builders/yarn'
+        dir: 'view'
+        args: [ 'install' ]
+
+    # yarn build
+    -   name: 'gcr.io/cloud-builders/yarn'
+        dir: 'view'
+        args: [ 'build' ]
+
+    # Docker view Build
+    -   name: 'gcr.io/cloud-builders/docker'
+        dir: 'view'
+        args: [ 'build', '-t',
+                'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/view:$SHORT_SHA', '.' ]
+
+    # Docker push view to Google Artifact Registry
+    -   name: 'gcr.io/cloud-builders/docker'
+        args: [ 'push', 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/view:$SHORT_SHA' ]
+
+images:
+    - 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/api:$SHORT_SHA'
+    - 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/view:$SHORT_SHA'
