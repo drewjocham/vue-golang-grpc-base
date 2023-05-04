@@ -4,7 +4,7 @@ steps:
       dir: 'api'
       entrypoint: /bin/bash
       args:
-        - c
+        - -c
         - |
             go get -t -d ./...
 
