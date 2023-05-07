@@ -5,7 +5,7 @@ import (
 )
 
 type ServerConfig struct {
-	HTTPPort      int    `envconfig:"PORT" default:"8081"`
+	HTTPPort      int    `envconfig:"HTTP_PORT" default:"8081"`
 	GRPCPort      int    `envconfig:"GRPC_PORT" default:"8082"`
 	ServerAddress string `envconfig:"SERVER_ADDRESS" default:"localhost:8082"`
 }
