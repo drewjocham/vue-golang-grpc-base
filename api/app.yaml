@@ -16,6 +16,8 @@ env_variables:
     GRPC_PORT: 8082
 network:
     forwarded_ports:
-      - 8081/tcp # grpc gateway
-      - 8082/tcp # grpc
+        - 8082
+        - 8081:8081
+        - 8082/tcp
+        - 8081:8081/tcp
 
