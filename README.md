@@ -36,3 +36,4 @@ Deploy the view container
 6) In Cloud repository authenticate your github account
    - Choose the branch
 
+* To communicate between services we need the services URL. For further documentation see [here](https://cloud.google.com/appengine/docs/flexible/communicating-between-services).
