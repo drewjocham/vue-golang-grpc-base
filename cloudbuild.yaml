@@ -1,3 +1,8 @@
+variables:
+    - name: PROJECT_NAME
+      value: casestudy2108
+
+# deployment and build setup for GCP's App Engine.
 steps:
     - name: golang:1.20
       dir: 'api'
@@ -11,7 +16,7 @@ steps:
     -   name: 'gcr.io/cloud-builders/docker'
         dir: 'api'
         args: [ 'build', '-t',
-                'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/api:$SHORT_SHA', '.' ]
+                'us-east1-docker.pkg.dev/${{ variables.PROJECT_NAME }}/personal/vue-golang-grpc-base/api:$SHORT_SHA', '.' ]
         env:
             - 'SERVER_ADDRESS=${_SERVER_ADDRESS}'
             - 'SERVER_ADDRESS=${_GRPC_PORT}'
@@ -19,7 +24,7 @@ steps:
 
     # Docker push to Google Artifact Registry
     -   name: 'gcr.io/cloud-builders/docker'
-        args: [ 'push', 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/api:$SHORT_SHA' ]
+        args: [ 'push', 'us-east1-docker.pkg.dev/${{ variables.PROJECT_NAME }}/personal/vue-golang-grpc-base/api:$SHORT_SHA' ]
 
     # yarn install
     -   name: 'gcr.io/cloud-builders/yarn'
@@ -37,11 +42,11 @@ steps:
     -   name: 'gcr.io/cloud-builders/docker'
         dir: 'view'
         args: [ 'build', '-t',
-                'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/view:$SHORT_SHA', '.' ]
+                'us-east1-docker.pkg.dev/${{ variables.PROJECT_NAME }}/personal/vue-golang-grpc-base/view:$SHORT_SHA', '.' ]
 
     # Docker push view to Google Artifact Registry
     -   name: 'gcr.io/cloud-builders/docker'
-        args: [ 'push', 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/view:$SHORT_SHA' ]
+        args: [ 'push', 'us-east1-docker.pkg.dev/${{ variables.PROJECT_NAME }}/personal/vue-golang-grpc-base/view:$SHORT_SHA' ]
 
     # Deploy api to GCP App Engine
     -   name: "gcr.io/cloud-builders/gcloud"
@@ -50,7 +55,7 @@ steps:
           [
               "app",
               "deploy",
-              "--image-url=us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/api:$SHORT_SHA",
+              "--image-url=us-east1-docker.pkg.dev/${{ variables.PROJECT_NAME }}/personal/vue-golang-grpc-base/api:$SHORT_SHA",
           ]
         timeout: "1600s"
 
@@ -61,11 +66,11 @@ steps:
           [
               "app",
               "deploy",
-              "--image-url=us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/view:$SHORT_SHA",
+              "--image-url=us-east1-docker.pkg.dev/${{ variables.PROJECT_NAME }}/personal/vue-golang-grpc-base/view:$SHORT_SHA",
           ]
         timeout: "1600s"
 
 images:
-    - 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/api:$SHORT_SHA'
-    - 'us-east1-docker.pkg.dev/personal-311605/personal/vue-golang-grpc-base/view:$SHORT_SHA'
+    - 'us-east1-docker.pkg.dev/${{ variables.PROJECT_NAME }}/personal/vue-golang-grpc-base/api:$SHORT_SHA'
+    - 'us-east1-docker.pkg.dev/${{ variables.PROJECT_NAME }}/personal/vue-golang-grpc-base/view:$SHORT_SHA'
 

@@ -14,5 +14,9 @@ automatic_scaling:
         target_utilization: 0.5
 resources:
     cpu: 1
-    memory_gb: 2
+    memory_gb: 0.5
     disk_size_gb: 10
+network:
+    instance_tag: personal
+    name: personal
+    session_affinity: true

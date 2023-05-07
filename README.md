@@ -13,10 +13,11 @@
 ## SSL Config
 [ssl-setup.md](./view/.docker/ssl-setup.md)
 
-## App Engine
+## GCP App Engine
 If you would like ot use App Engine on GCP there are two yaml files at the root of the
 directory. Once App Engine turned on and the SDK is downloaded locally run the below commands to deploy.
 
+## Manual GCP App Engine deployment
 Deploy the api container
 `gcloud app deploy api/api.yaml`
 
