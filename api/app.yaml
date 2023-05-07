@@ -16,10 +16,11 @@ resources:
     cpu: 1
     memory_gb: 0.5
     disk_size_gb: 10
-network:
-    instance_tag: personal
-    name: personal
-    session_affinity: true
-    forwarded_ports:
-        - HOST_PORT:8081
+env_variables:
+    API_HOST: 'api'
+ports:
+    - containerPort: 8081
+      name: grpc
+    - containerPort: 8082
+      name: gateway
 
