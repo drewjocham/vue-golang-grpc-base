@@ -1,11 +1,7 @@
-# app.yaml
 runtime: go
 env: flex
 # If you have one application, please use "default" for service
 service: api
-# VPC Network if you have one
-#network:
-#  name: default
 automatic_scaling:
     min_num_instances: 1
     max_num_instances: 2
@@ -20,6 +16,6 @@ env_variables:
     API_HOST: 'api'
 network:
     forwarded_ports:
-        - 8081/tcp
-        - 8082/tcp
+      - 8081/tcp # grpc gateway
+      - 8082/tcp # grpc
 
