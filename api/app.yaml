@@ -18,9 +18,8 @@ resources:
     disk_size_gb: 10
 env_variables:
     API_HOST: 'api'
-ports:
-    - containerPort: 8081
-      name: grpc
-    - containerPort: 8082
-      name: gateway
+network:
+    forwarded_ports:
+        - 8081/tcp
+        - 8082/tcp
 
