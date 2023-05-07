@@ -37,3 +37,4 @@ Deploy the view container
    - Choose the branch
 
 * To communicate between services we need the services URL. For further documentation see [here](https://cloud.google.com/appengine/docs/flexible/communicating-between-services).
+* To enable debugging on your app engine flex environment enter the following in your terminal `gcloud app --project PROJECT-ID instances enable-debug` [docs](https://cloud.google.com/appengine/docs/flexible/debugging-an-instance)

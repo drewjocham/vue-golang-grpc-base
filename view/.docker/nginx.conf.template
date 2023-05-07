@@ -54,7 +54,7 @@ http {
          listen 443 ssl;
          listen [::]:443 ssl;
 
-         server_name localhost drewjocham.com www.drewjocham.com;
+         server_name localhost drewjocham.com www.drewjocham.com api-dot-casestudy2108.ue.r.appspot.com;
 
          keepalive_timeout   70;
 
