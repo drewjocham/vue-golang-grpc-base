@@ -1,4 +1,4 @@
-# deployment and build setup for GCP's App Engine.
+# deployment and build setup for GCPs App Engine.
 steps:
     - name: golang:1.20
       dir: 'api'
