@@ -1,0 +1,7 @@
+dispatch:
+    - # api traffic
+    -   url: "*/v1/*"
+        service: api
+      # send all other traffic to view service
+    - url: "*/.*"
+      service: view
