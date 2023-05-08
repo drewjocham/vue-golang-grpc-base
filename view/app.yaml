@@ -13,3 +13,4 @@ resources:
     disk_size_gb: 10
 env_variables:
     API_HOST: "api-dot-casestudy2108.ue.r.appspot.com"
+
