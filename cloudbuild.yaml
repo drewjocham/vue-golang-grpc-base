@@ -13,10 +13,10 @@ steps:
         dir: 'api'
         args: [ 'build', '-t',
                 'us-central1-docker.pkg.dev/casestudy2108/personal/vue-golang-grpc-base/api:$SHORT_SHA', '.' ]
-        env:
-            - 'SERVER_ADDRESS=${_SERVER_ADDRESS}'
-            - 'SERVER_ADDRESS=${_GRPC_PORT}'
-            - 'SERVER_ADDRESS=${_PORT}'
+        #env:
+            #- 'SERVER_ADDRESS=${_SERVER_ADDRESS}'
+            #- 'SERVER_ADDRESS=${_GRPC_PORT}'
+            #- 'SERVER_ADDRESS=${_PORT}'
 
     # Docker push to Google Artifact Registry
     -   name: 'gcr.io/cloud-builders/docker'
