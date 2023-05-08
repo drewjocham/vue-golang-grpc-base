@@ -4,4 +4,4 @@ dispatch:
       service: api
       # send all other traffic to default service
     - url: "*/.*"
-      service: view
+      service: default
