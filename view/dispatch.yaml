@@ -2,6 +2,6 @@ dispatch:
     - # api traffic
     - url: "*/v1/*"
       service: api
-      # send all other traffic to default service
+        # send all other traffic to default service
     - url: "*/.*"
       service: default
