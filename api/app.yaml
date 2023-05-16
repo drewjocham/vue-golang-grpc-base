@@ -12,10 +12,9 @@ resources:
     memory_gb: 0.5
     disk_size_gb: 10
 env_variables:
-    HTTP_PORT: 8081
+    HTTP_PORT: 8080
     GRPC_PORT: 8082
 network:
     forwarded_ports:
-      - 8081:8081/tcp # grpc gateway port
-      #- 8082:8082/tcp # grpc port
+      - 8082:8082/tcp # grpc port
 

@@ -41,7 +41,7 @@ http {
     }
 
      upstream api {
-        server ${API_HOST}:8081;
+        server ${API_HOST}:${API_PORT};
      }
 
      # ssl_session_cache   shared:SSL:10m;
