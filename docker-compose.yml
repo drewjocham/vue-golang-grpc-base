@@ -3,6 +3,9 @@ services:
     api:
         build:
             context: ./api
+        environment:
+            - HTTP_PORT=8081
+            - GRPC_PORT=8082
         ports:
             - "8082:8082" # gRPC
             - "8081:8081" # gRPC Gateway
@@ -13,6 +16,7 @@ services:
             context: ./view
         environment:
             - API_HOST=api
+            - API_PORT=8081
             - NODE_ENV=production
         env_file:
             -   view/.env.local

@@ -1,0 +1,16 @@
+runtime: custom
+env: flex
+service: view
+automatic_scaling:
+    min_num_instances: 1
+    max_num_instances: 2
+    cool_down_period_sec: 180
+    cpu_utilization:
+        target_utilization: 0.5
+resources:
+    cpu: 1
+    memory_gb: 0.5
+    disk_size_gb: 10
+env_variables:
+    API_HOST: "api-dot-casestudy2108.ue.r.appspot.com"
+
