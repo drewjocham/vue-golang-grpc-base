@@ -1,0 +1,10 @@
+dispatch:
+    # api traffic
+    - url: "*/v1/*"
+      service: api
+    # view traffic
+    - url: "view-dot-casestudy2108.ue.r.appspot.com/*"
+      service: view
+    # Default service serves simple hostname request.
+    - url: "casestudy2108.ue.r.appspot.com/"
+      service: default
